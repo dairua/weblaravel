@@ -90,7 +90,7 @@ Route::get('/delete-product/{product_id}','ProductController@delete_product');
 Route::get('/all-product','ProductController@all_product');
 Route::get('/unactive-product/{product_id}','ProductController@unactive_product');
 Route::get('/active-product/{product_id}','ProductController@active_product');
-Route::post('/save-product','ProductController@save_product');
+Route::post('/save-product','ProductController@save_product')->name('save.product');
 Route::post('/update-product/{product_id}','ProductController@update_product');
 
 //Coupon

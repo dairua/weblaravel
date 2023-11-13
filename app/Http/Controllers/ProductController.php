@@ -7,6 +7,7 @@ use DB;
 use Session;
 use App\Slider;
 use App\Http\Requests;
+use App\Product;
 use Illuminate\Support\Facades\Redirect;
 session_start();
 class ProductController extends Controller
@@ -51,7 +52,8 @@ class ProductController extends Controller
         $data['category_id'] = $request->product_cate;
         $data['brand_id'] = $request->product_brand;
         $data['product_status'] = $request->product_status;
-        $data['product_image'] = $request->product_image;
+        $data['product_image'] = $request->product_status;
+        $data['product_sold'] = 1;
         $get_image = $request->file('product_image');
       
         if($get_image){
@@ -68,6 +70,24 @@ class ProductController extends Controller
     	DB::table('tbl_product')->insert($data);
     	Session::put('message','Thêm sản phẩm thành công');
     	return Redirect::to('all-product');
+        
+        // $sp = new Product;
+        // $sp->product_name = $request->product_name;
+        // $sp->product_quantity = $request->product_quantity;
+        // $sp->product_slug = $request->product_slug;
+        // $sp->product_price = $request->product_price;
+        // $sp->product_desc = $request->product_desc;
+        // $sp->product_content = $request->product_content;
+        // $sp->category_id = $request->product_cate;
+        // $sp->brand_id = $request->product_brand;
+        // $sp->product_status = $request->product_status;
+        // $sp->product_sold = 1;
+        // $sp->product_image = 'acxcxc';
+
+        // $get_image = $request->file('product_image');
+        
+        // $sp->save();
+        // return Redirect::to('all-product');
     }
     public function unactive_product($product_id){
          $this->AuthLogin();
