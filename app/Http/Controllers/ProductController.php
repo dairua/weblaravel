@@ -51,7 +51,7 @@ class ProductController extends Controller
         $data['category_id'] = $request->product_cate;
         $data['brand_id'] = $request->product_brand;
         $data['product_status'] = $request->product_status;
-        $data['product_image'] = $request->product_status;
+        $data['product_image'] = $request->product_image;
         $get_image = $request->file('product_image');
       
         if($get_image){

@@ -24,14 +24,14 @@
                                     <input type="text" name="product_name" class="form-control" onkeyup="ChangeToSlug();" id="slug" value="{{$pro->product_name}}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">SL sản phẩm</label>
-                                    <input type="text" data-validation="number" data-validation-error-msg="Làm ơn điền số lượng" name="product_quantity" class="form-control" id="convert_slug" value="{{$pro->product_quantity}}">
-                                </div>
-                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Slug</label>
-                                    <input type="text" name="product_slug" class="form-control" id="exampleInputEmail1" value="{{$pro->product_slug}}">
+                                    <input type="text" name="product_slug" class="form-control" id="convert_slug" value="{{$pro->product_slug}}">
                                 </div>
-                                     <div class="form-group">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">SL sản phẩm</label>
+                                    <input type="text" data-validation="number" data-validation-error-msg="Làm ơn điền số lượng" name="product_quantity" class="form-control" value="{{$pro->product_quantity}}">
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Giá sản phẩm</label>
                                     <input type="text" value="{{$pro->product_price}}" name="product_price" class="form-control" id="exampleInputEmail1" >
                                 </div>
@@ -42,11 +42,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Mô tả sản phẩm</label>
-                                    <textarea style="resize: none" rows="8" class="form-control" name="product_desc" id="ckeditor2">{{$pro->product_desc}}</textarea>
+                                    <textarea style="resize: none" rows="20" class="form-control" name="product_desc" id="ckeditor2">{{$pro->product_desc}}</textarea>
                                 </div>
                                  <div class="form-group">
                                     <label for="exampleInputPassword1">Nội dung sản phẩm</label>
-                                    <textarea style="resize: none" rows="8" class="form-control" name="product_content" id="ckeditor3" >{{$pro->product_content}}</textarea>
+                                    <textarea style="resize: none" rows="20" class="form-control" name="product_content" id="ckeditor3" >{{$pro->product_content}}</textarea>
                                 </div>
                                  <div class="form-group">
                                     <label for="exampleInputPassword1">Danh mục sản phẩm</label>
