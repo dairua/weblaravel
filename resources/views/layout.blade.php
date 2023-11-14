@@ -206,7 +206,7 @@
                         </ol>
                         <style type="text/css">
                             img.img.img-responsive.img-slider {
-                                height: 350px;
+                                height: 400px;
                             }
                         </style>
                         <div class="carousel-inner">

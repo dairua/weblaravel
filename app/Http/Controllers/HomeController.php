@@ -37,9 +37,9 @@ class HomeController extends Controller
         //slide
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
         //seo 
-        $meta_desc = "Chuyên bán những phụ kiện ,thiết bị điện thoại"; 
-        $meta_keywords = "thiết bi điện thoại,phu kien điện thoại";
-        $meta_title = "Điện thoại chính hãng";
+        $meta_desc = "Chuyên bán các sản phẩm handmade chính hãng"; 
+        $meta_keywords = "handmade phương anh, handmade phuong anh";
+        $meta_title = "Handmade Phương Anh";
         $url_canonical = $request->url();
         //--seo
         
