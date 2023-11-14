@@ -10,6 +10,7 @@ use App\Imports\ExcelImports;
 use Excel;
 use CategoryProductModel;
 use Session;
+use Auth;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 session_start();

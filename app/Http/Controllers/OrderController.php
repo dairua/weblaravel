@@ -119,7 +119,7 @@ class OrderController extends Controller
 		}
 		</style>
 		<h1><centerCông ty TNHH một thành viên ABCD</center></h1>
-		<h4><center>Độc lập - Tự do - Hạnh phúc</center></h4>
+		<h4><center>In đơn hàng Handmade Phương Anh Shop</center></h4>
 		<p>Người đặt hàng</p>
 		<table class="table-styling">
 				<thead>

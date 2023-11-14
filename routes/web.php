@@ -66,7 +66,17 @@ Route::get('/active-brand-product/{brand_product_id}','BrandProduct@active_brand
 
 Route::post('/save-brand-product','BrandProduct@save_brand_product');
 Route::post('/update-brand-product/{brand_product_id}','BrandProduct@update_brand_product');
+//Category post
+Route::get('/add-category-post','CategoryPost@add_category_post');
+Route::get('/edit-category-post/{category_post_id}','CategoryPost@edit_category_post');
+Route::post('/save-category-post','CategoryPost@save_category_post');
+Route::get('/all-category-post','CategoryPost@all_category_post');
+Route::post('/update-category-post/{cate_id}','CategoryPost@update_category_post');
+Route::get('/danh-muc-bai-viet/{cate_post_slug}','CategoryPost@danh_muc_bai_viet');
+Route::get('/delete-category-post/{cate_id}','CategoryPost@delete_category_post');
 
+Route::get('/unactive-category-post/{cate_post_id}','CategoryPost@unactive_category_post');
+Route::get('/active-category-post/{cate_post_id}','CategoryPost@active_category_post');
 
 //Product
 // Route::group(['middleware' => 'roles', 'roles'=>['admin','author']], function () {
