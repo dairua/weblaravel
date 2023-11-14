@@ -9,6 +9,7 @@ use App\Shipping;
 use App\Order;
 use App\OrderDetails;
 use App\Customer;
+use App\Catepost;
 use App\Coupon;
 use App\Product;
 use PDF;
@@ -255,6 +256,7 @@ class OrderController extends Controller
 
 	}
 	public function view_order($order_code){
+		$category_post = CatePost::orderBy('cate_post_id','DESC')->get();
 		$order_details = OrderDetails::with('product')->where('order_code',$order_code)->get();
 		$order = Order::where('order_code',$order_code)->get();
 		foreach($order as $key => $ord){
@@ -280,7 +282,7 @@ class OrderController extends Controller
 			$coupon_number = 0;
 		}
 		
-		return view('admin.view_order')->with(compact('order_details','customer','shipping','order_details','coupon_condition','coupon_number','order','order_status'));
+		return view('admin.view_order')->with(compact('order_details','customer','shipping','order_details','coupon_condition','coupon_number','order','order_status'))->with('category_post', $category_post);
 
 	}
     public function manage_order(){

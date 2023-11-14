@@ -66,6 +66,7 @@ Route::get('/active-brand-product/{brand_product_id}','BrandProduct@active_brand
 
 Route::post('/save-brand-product','BrandProduct@save_brand_product');
 Route::post('/update-brand-product/{brand_product_id}','BrandProduct@update_brand_product');
+
 //Category post
 Route::get('/add-category-post','CategoryPost@add_category_post');
 Route::get('/edit-category-post/{category_post_id}','CategoryPost@edit_category_post');
@@ -77,6 +78,10 @@ Route::get('/delete-category-post/{cate_id}','CategoryPost@delete_category_post'
 
 Route::get('/unactive-category-post/{cate_post_id}','CategoryPost@unactive_category_post');
 Route::get('/active-category-post/{cate_post_id}','CategoryPost@active_category_post');
+
+//Post
+Route::get('/add-post','PostController@add_post');
+Route::post('/save-post','PostController@save_post');
 
 //Product
 // Route::group(['middleware' => 'roles', 'roles'=>['admin','author']], function () {

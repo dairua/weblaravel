@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\City;
 use App\Province;
 use App\Wards;
+
 use App\Feeship;
 class DeliveryController extends Controller
 {
@@ -64,7 +65,7 @@ class DeliveryController extends Controller
 		$fee_ship->save();
 	}
     public function delivery(Request $request){
-
+		
     	$city = City::orderby('matp','ASC')->get();
 
     	return view('admin.delivery.add_delivery')->with(compact('city'));

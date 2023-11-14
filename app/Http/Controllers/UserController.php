@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use App\Roles;
 use App\Admin;
+use App\Catepost;
 use Session;
 class UserController extends Controller
 {
@@ -17,9 +18,10 @@ class UserController extends Controller
      */
     public function index()
     {
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
         
         $admin = Admin::with('roles')->orderBy('admin_id','DESC')->paginate(5);
-        return view('admin.users.all_users')->with(compact('admin'));
+        return view('admin.users.all_users')->with(compact('admin'))->with('category_post', $category_post);
     }
     public function add_users(){
         return view('admin.users.add_users');

@@ -12,6 +12,7 @@ use CategoryProductModel;
 use Session;
 use Auth;
 use App\Http\Requests;
+use App\Catepost;
 use Illuminate\Support\Facades\Redirect;
 session_start();
 
@@ -26,6 +27,7 @@ class CategoryProduct extends Controller
         }
     }
     public function add_category_product(){
+        
         $this->AuthLogin();
     	return view('admin.add_category_product');
     }
@@ -92,6 +94,7 @@ class CategoryProduct extends Controller
 
     //End Function Admin Page
     public function show_category_home(Request $request ,$slug_category_product){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
        //slide
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
 
@@ -113,7 +116,7 @@ class CategoryProduct extends Controller
                 }
          
 
-        return view('pages.category.show_category')->with('category',$cate_product)->with('brand',$brand_product)->with('category_by_id',$category_by_id)->with('category_name',$category_name)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider);
+        return view('pages.category.show_category')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('category_by_id',$category_by_id)->with('category_name',$category_name)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider);
     }
     public function export_csv(){
         return Excel::download(new ExcelExports , 'category_product.xlsx');

@@ -7,6 +7,7 @@ use DB;
 use Session;
 use App\Slider;
 use App\Http\Requests;
+use App\Catepost;
 use App\Product;
 use Illuminate\Support\Facades\Redirect;
 session_start();
@@ -22,11 +23,12 @@ class ProductController extends Controller
     }
     public function add_product(){
         $this->AuthLogin();
+        
         $cate_product = DB::table('tbl_category_product')->orderby('category_id','desc')->get(); 
         $brand_product = DB::table('tbl_brand')->orderby('brand_id','desc')->get(); 
        
 
-        return view('admin.add_product')->with('cate_product', $cate_product)->with('brand_product',$brand_product);
+        return view('admin.add_product')->with('cate_product', $cate_product)->with('brand_product',$brand_product)->with('category_post', $category_post);
     	
 
     }
@@ -52,7 +54,7 @@ class ProductController extends Controller
         $data['category_id'] = $request->product_cate;
         $data['brand_id'] = $request->product_brand;
         $data['product_status'] = $request->product_status;
-        $data['product_image'] = $request->product_status;
+        $data['product_image'] = $request->product_image;
         $data['product_sold'] = 1;
         $get_image = $request->file('product_image');
       
@@ -139,7 +141,7 @@ class ProductController extends Controller
         }
             
         DB::table('tbl_product')->where('product_id',$product_id)->update($data);
-        Session::put('message','Cập nhật sản phẩm thành công');
+        Session::put('message','Cập nhật sản phẩm thất bại');
         return Redirect::to('all-product');
     }
     public function delete_product($product_id){
@@ -150,6 +152,7 @@ class ProductController extends Controller
     }
     //End Admin Page
     public function details_product($product_slug , Request $request){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
          //slide
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
 
@@ -177,7 +180,7 @@ class ProductController extends Controller
         ->where('tbl_category_product.category_id',$category_id)->whereNotIn('tbl_product.product_slug',[$product_slug])->orderby(DB::raw('RAND()'))->paginate(3);
 
 
-        return view('pages.sanpham.show_details')->with('category',$cate_product)->with('brand',$brand_product)->with('product_details',$details_product)->with('relate',$related_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider);
+        return view('pages.sanpham.show_details')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('product_details',$details_product)->with('relate',$related_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider);
 
     }
 }

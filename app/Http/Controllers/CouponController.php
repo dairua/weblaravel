@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Coupon;
 use Session;
+
 use Illuminate\Support\Facades\Redirect;
 session_start();
 
@@ -19,6 +20,7 @@ class CouponController extends Controller
         }
 	}
     public function insert_coupon(){
+		
     	return view('admin.coupon.insert_coupon');
     }
     public function delete_coupon($coupon_id){

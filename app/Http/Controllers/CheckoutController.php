@@ -17,6 +17,7 @@ use App\Feeship;
 use App\Slider;
 use App\Shipping;
 use App\Order;
+use App\Catepost;
 use App\OrderDetails;
 use App\Coupon;
 
@@ -128,6 +129,7 @@ class CheckoutController extends Controller
     }
     public function view_order($orderId){
         $this->AuthLogin();
+        
         $order_by_id = DB::table('tbl_order')
         ->join('tbl_customers','tbl_order.customer_id','=','tbl_customers.customer_id')
         ->join('tbl_shipping','tbl_order.shipping_id','=','tbl_shipping.shipping_id')
@@ -139,6 +141,7 @@ class CheckoutController extends Controller
         
     }
     public function login_checkout(Request $request){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
          //slide
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
 
@@ -152,7 +155,7 @@ class CheckoutController extends Controller
     	$cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
 
-    	return view('pages.checkout.login_checkout')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider);
+    	return view('pages.checkout.login_checkout')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider);
     }
     public function add_customer(Request $request){
 

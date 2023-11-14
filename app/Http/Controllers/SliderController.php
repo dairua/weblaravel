@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Slider;
 use Session;
+
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use DB;
@@ -19,6 +20,7 @@ class SliderController extends Controller
         }
     }
     public function manage_slider(){
+       
     	$all_slide = Slider::orderBy('slider_id','DESC')->paginate(2);
     	return view('admin.slider.list_slider')->with(compact('all_slide'));
     }

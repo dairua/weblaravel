@@ -19,8 +19,8 @@ class HomeController extends Controller
     }
     public function send_mail(){
          //send mail
-                $to_name = "Tung Duong";
-                $to_email = "duongkq3@gmail.com";//send to this email
+                $to_name = "Đại Turtle";
+                $to_email = "pdai20032k1@gmail.com";//send to this email
                
              
                 $data = array("name"=>"Mail từ tài khoản Khách hàng","body"=>'Mail gửi về vấn về hàng hóa'); //body of mail.blade.php
