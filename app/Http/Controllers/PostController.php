@@ -31,16 +31,13 @@ class PostController extends Controller
     	
 
     }
-    // public function all_product(){
-    //     $this->AuthLogin();
-    // 	$all_product = DB::table('tbl_product')
-    //     ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
-    //     ->join('tbl_brand','tbl_brand.brand_id','=','tbl_product.brand_id')
-    //     ->orderby('tbl_product.product_id','desc')->paginate(5);
-    // 	$manager_product  = view('admin.all_product')->with('all_product',$all_product);
-    // 	return view('admin_layout')->with('admin.all_product', $manager_product);
+    public function all_post(){
+        $this->AuthLogin();
+    	$all_post = Post::orderBy('post_id')->paginate(10);
+    	
+    	return view('admin.post.list_post')->with(compact('all_post',$all_post));
 
-    // }
+    }
     public function save_post(Request $request){
         $this->AuthLogin();
     	$data = $request->all();
@@ -61,30 +58,46 @@ class PostController extends Controller
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.',$get_name_image));
             $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-            $get_image->move('public/uploads/post',$new_image);
+            $get_image->move('/public/uploads/post',$new_image);
             $post->post_image = $new_image;
             $post->save();
             Session::put('message','Thêm bài viết thành công');
             return redirect()->back();
-        }else{
-            $post->save();
+        }
+            // $post->save();
             Session::put('message','Thêm bài viết thành công');
             return redirect()->back();
-        } 
-    }
-    // public function unactive_product($product_id){
-    //      $this->AuthLogin();
-    //     DB::table('tbl_product')->where('product_id',$product_id)->update(['product_status'=>1]);
-    //     Session::put('message','Không kích hoạt sản phẩm thành công');
-    //     return Redirect::to('all-product');
 
-    // }
-    // public function active_product($product_id){
-    //      $this->AuthLogin();
-    //     DB::table('tbl_product')->where('product_id',$product_id)->update(['product_status'=>0]);
-    //     Session::put('message','Không kích hoạt sản phẩm thành công');
-    //     return Redirect::to('all-product');
-    // }
+            // $this->AuthLogin();
+            // $data = array();
+            // $data['post_title'] = $request->post_title;
+            // $data['post_slug'] = $request->post_slug;
+            // $data['post_content'] = $request->post_content;
+            // $data['post_meta_keywords'] = $request->post_meta_keywords;
+            // $data['post_meta_desc'] = $request->post_meta_desc;
+            // $data['post_desc'] = $request->post_desc;
+            // $data['cate_post_id'] = $request->cate_post_id;
+            // $data['post_status'] = $request->post_status;
+            // $data['post_image'] = $request->post_image;
+           
+            // $get_image = $request->file('post_image');
+          
+            // if($get_image){
+            //     $get_name_image = $get_image->getClientOriginalName();
+            //     $name_image = current(explode('.',$get_name_image));
+            //     $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+            //     $get_image->move('public/uploads/post',$new_image);
+            //     $data['post_image'] = $new_image;
+            //     DB::table('tbl_posts')->insert($data);
+            //     Session::put('message','Thêm bài viết thành công');
+            //     return Redirect::to('add-post');
+            // }
+            // $data['post_image'] = '';
+            // DB::table('tbl_posts')->insert($data);
+            // Session::put('message','Thêm bài viết thành công');
+            // return Redirect::to('all-post');
+    } 
+    
     // public function edit_product($product_id){
     //      $this->AuthLogin();
     //     $cate_product = DB::table('tbl_category_product')->orderby('category_id','desc')->get(); 
@@ -125,10 +138,69 @@ class PostController extends Controller
     //     Session::put('message','Cập nhật sản phẩm thành công');
     //     return Redirect::to('all-product');
     // }
-    // public function delete_product($product_id){
-    //     $this->AuthLogin();
-    //     DB::table('tbl_product')->where('product_id',$product_id)->delete();
-    //     Session::put('message','Xóa sản phẩm thành công');
-    //     return Redirect::to('all-product');
-    // }
+    public function delete_post($post_id){
+        $this->AuthLogin();
+        $post = Post::find($post_id);
+        $post_image=$post->post_image;
+        if($post_image){
+            $path='public/uplads/post/'.$post_image;
+        }
+        $post->delete();
+
+        Session::put('message','Xóa bài viết thành công');
+        return redirect()->back();
+    }
+
+
+    public function danh_muc_bai_viet(Request $request,$post_slug){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
+         //slide
+         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+ 
+         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get(); 
+         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
+ 
+         $catepost = CatePost::where('cate_post_slug',$post_slug)->take(1)->get();
+
+         //seo 
+         foreach($catepost as $key =>$cate){
+         $meta_desc = $cate->cate_post_desc; 
+         $meta_keywords = $cate->cate_post_slug;
+         $meta_title = $cate->cate_post_name;
+         $cate_id = $cate->cate_post_id;
+         $url_canonical = $request->url();
+         //--seo
+         }
+
+         $post = Post::where('post_status',0)->where('cate_post_id',$cate_id)->paginate(10);
+ 
+ 
+         return view('pages.baiviet.danhmucbaiviet')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)
+         ->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)
+         ->with('post',$post)->with('category_post',$category_post);
+    }
+
+    public function bai_viet(Request $request,$post_slug){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
+         //slide
+         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+ 
+         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get(); 
+         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
+ 
+        $post = Post::where('post_status',0)->where('post_slug',$post_slug)->take(1)->get();
+         //seo 
+         foreach($post as $key =>$p){
+         $meta_desc = $p->post_meta_desc; 
+         $meta_keywords = $p->post_meta_keywords;
+         $meta_title = $p->post_title;
+         $cate_id = $p->cate_post_id;
+         $url_canonical = $request->url();
+         //--seo
+         }
+ 
+         return view('pages.baiviet.baiviet')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)
+         ->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)
+         ->with('post',$post)->with('category_post',$category_post);
+    }
 }

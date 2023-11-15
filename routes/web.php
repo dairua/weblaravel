@@ -21,6 +21,10 @@ Route::get('/danh-muc/{slug_category_product}','CategoryProduct@show_category_ho
 Route::get('/thuong-hieu/{brand_slug}','BrandProduct@show_brand_home');
 Route::get('/chi-tiet/{product_slug}','ProductController@details_product');
 
+//BaiViet
+Route::get('/danh-muc-bai-viet/{post_slug}','PostController@danh_muc_bai_viet');
+Route::get('/bai-viet/{post_slug}','PostController@bai_viet');
+
 //Backend
 Route::get('/admin','AdminController@index');
 Route::get('/dashboard','AdminController@show_dashboard');
@@ -81,6 +85,8 @@ Route::get('/active-category-post/{cate_post_id}','CategoryPost@active_category_
 
 //Post
 Route::get('/add-post','PostController@add_post');
+Route::get('/all-post','PostController@all_post');
+Route::get('/delete-post/{post_id}','PostController@delete_post');
 Route::post('/save-post','PostController@save_post');
 
 //Product

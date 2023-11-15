@@ -27,6 +27,10 @@
                                     <input type="text" name="post_slug" class="form-control" id="convert_slug" placeholder="Slug">
                                 </div>
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Hình ảnh bài viết</label>
+                                    <input type="file" name="post_image" class="form-control" id="exampleInputEmail1">
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputPassword1">Tóm tắt bài viết</label>
                                     <textarea style="resize: none" rows="8" class="form-control" name="post_desc" id="ckeditor1" placeholder="Mô tả danh mục"></textarea>
                                 </div>
@@ -43,10 +47,6 @@
                                     <textarea style="resize: none" rows="4" class="form-control" name="post_meta_desc" id="exampleInputPassword1" placeholder="Mô tả danh mục"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Hình ảnh bài viết</label>
-                                    <input type="file" name="post_image" class="form-control" id="exampleInputEmail1">
-                                </div>
-                                <div class="form-group">
                                     <label for="exampleInputPassword1">Danh mục bài viết</label>
                                       <select name="cate_post_id" class="form-control input-sm m-bot15">
                                             @foreach($cate_post as $key =>$cate)
@@ -57,7 +57,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputPassword1">Hiển thị</label>
                                       <select name="post_status" class="form-control input-sm m-bot15">
-                                            <option value="0">Hiển thị</option>
+                                         <option value="0">Hiển thị</option>
                                             <option value="1">Ẩn</option>
                                             
                                     </select>

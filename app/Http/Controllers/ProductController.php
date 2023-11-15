@@ -43,7 +43,7 @@ class ProductController extends Controller
 
     }
     public function save_product(Request $request){
-         $this->AuthLogin();
+        $this->AuthLogin();
     	$data = array();
     	$data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
@@ -70,7 +70,7 @@ class ProductController extends Controller
         }
         $data['product_image'] = '';
     	DB::table('tbl_product')->insert($data);
-    	Session::put('message','Thêm sản phẩm thành công');
+    	Session::put('message','Thêm sản phẩm thất bại');
     	return Redirect::to('all-product');
         
         // $sp = new Product;
