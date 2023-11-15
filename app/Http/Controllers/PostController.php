@@ -40,8 +40,36 @@ class PostController extends Controller
     }
     public function save_post(Request $request){
         $this->AuthLogin();
-    	$data = $request->all();
-        $post = new Post();
+    	// $data = $request->all();
+        // $post = new Post();
+        // $post->post_title = $data['post_title'];
+        // $post->post_slug = $data['post_slug'];
+        // $post->post_content = $data['post_content'];
+        // $post->post_meta_keywords = $data['post_meta_keywords'];
+        // $post->post_meta_desc = $data['post_meta_desc'];
+        // $post->post_desc = $data['post_desc'];
+        // $post->cate_post_id = $data['cate_post_id'];
+        // $post->post_status = $data['post_status'];
+        // $post->post_image = $data['post_image'];
+    	
+        // $get_image = $request->file('post_image');
+      
+        // if($get_image){
+        //     $get_name_image = $get_image->getClientOriginalName();
+        //     $name_image = current(explode('.',$get_name_image));
+        //     $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+        //     $get_image->move('/public/uploads/post',$new_image);
+        //     $post->post_image = $new_image;
+        //     $post->save();
+        //     Session::put('message','Thêm bài viết thành công');
+        //     return redirect()->back();
+        // }
+        //     // $post->save();
+        //     Session::put('message','Thêm bài viết thành công');
+        //     return redirect()->back();
+
+        $data=$request->all();
+        $post=new Post();
         $post->post_title = $data['post_title'];
         $post->post_slug = $data['post_slug'];
         $post->post_content = $data['post_content'];
@@ -53,49 +81,17 @@ class PostController extends Controller
         $post->post_image = $data['post_image'];
     	
         $get_image = $request->file('post_image');
-      
+        $path='public/uploads/post';
         if($get_image){
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.',$get_name_image));
             $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-            $get_image->move('/public/uploads/post',$new_image);
+            $get_image->move($path,$new_image);
             $post->post_image = $new_image;
-            $post->save();
-            Session::put('message','Thêm bài viết thành công');
-            return redirect()->back();
         }
-            // $post->save();
-            Session::put('message','Thêm bài viết thành công');
-            return redirect()->back();
-
-            // $this->AuthLogin();
-            // $data = array();
-            // $data['post_title'] = $request->post_title;
-            // $data['post_slug'] = $request->post_slug;
-            // $data['post_content'] = $request->post_content;
-            // $data['post_meta_keywords'] = $request->post_meta_keywords;
-            // $data['post_meta_desc'] = $request->post_meta_desc;
-            // $data['post_desc'] = $request->post_desc;
-            // $data['cate_post_id'] = $request->cate_post_id;
-            // $data['post_status'] = $request->post_status;
-            // $data['post_image'] = $request->post_image;
-           
-            // $get_image = $request->file('post_image');
-          
-            // if($get_image){
-            //     $get_name_image = $get_image->getClientOriginalName();
-            //     $name_image = current(explode('.',$get_name_image));
-            //     $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-            //     $get_image->move('public/uploads/post',$new_image);
-            //     $data['post_image'] = $new_image;
-            //     DB::table('tbl_posts')->insert($data);
-            //     Session::put('message','Thêm bài viết thành công');
-            //     return Redirect::to('add-post');
-            // }
-            // $data['post_image'] = '';
-            // DB::table('tbl_posts')->insert($data);
-            // Session::put('message','Thêm bài viết thành công');
-            // return Redirect::to('all-post');
+        $post->save();
+        
+        return redirect()->back()->with('message','Thêm bài viết thành công');
     } 
     
     // public function edit_product($product_id){

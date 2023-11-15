@@ -16,6 +16,11 @@ Route::get('/trang-chu','HomeController@index');
 Route::get('/404','HomeController@error_page');
 Route::post('/tim-kiem','HomeController@search');
 
+//LienHe
+Route::get('/lien-he','ContactController@lien_he' );
+Route::get('/information','ContactController@information' );
+Route::post('/save-infor','ContactController@save_infor' );
+Route::post('/update-infor/{info_id}','ContactController@update_infor' );
 //Danh muc san pham trang chu
 Route::get('/danh-muc/{slug_category_product}','CategoryProduct@show_category_home');
 Route::get('/thuong-hieu/{brand_slug}','BrandProduct@show_brand_home');
@@ -40,7 +45,6 @@ Route::get('/all-category-product','CategoryProduct@all_category_product');
 
 Route::post('/export-csv','CategoryProduct@export_csv');
 Route::post('/import-csv','CategoryProduct@import_csv');
-
 
 Route::get('/unactive-category-product/{category_product_id}','CategoryProduct@unactive_category_product');
 Route::get('/active-category-product/{category_product_id}','CategoryProduct@active_category_product');

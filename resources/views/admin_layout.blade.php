@@ -91,6 +91,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Tổng quan</span>
                     </a>
                 </li>
+                <li>
+                    <a href="{{URL::to('/information')}}">
+                        <i class="fa fa-fax" aria-hidden="true"></i>
+                        <span>Thông tin liên hệ</span>
+                    </a>
+                </li>
                  
                 <li class="sub-menu">
                     <a href="javascript:;">
