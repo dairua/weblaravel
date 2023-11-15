@@ -2,6 +2,7 @@
 @section('content')
 @foreach($product_details as $key => $value)
 <div class="product-details"><!--product-details-->
+<a href="{{URL::to('/')}}" style ="color:#00adc4"class="btn btn-default fa fa-heart-o" aria-hidden="true" >Trang chủ</a>
 						<div class="col-sm-5">
 							<div class="view-product">
 								<img src="{{URL::to('/public/uploads/product/'.$value->product_image)}}" alt="" />

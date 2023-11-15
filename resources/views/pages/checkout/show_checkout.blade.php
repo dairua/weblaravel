@@ -3,12 +3,8 @@
 
 <section id="cart_items">
 		<div class="container cart_pay">
-			<div class="breadcrumbs">
-				<ol class="breadcrumb">
-				  <li><a href="{{URL::to('/')}}">Trang chủ</a></li>
-				  <li class="active">Thanh toán giỏ hàng</li>
-				</ol>
-			</div>
+		<a href="{{URL::to('/')}}" style ="color:#00adc4"class="btn btn-default fa fa-heart-o" aria-hidden="true" >Trang chủ</a>
+                        <h2 class="title text-center">Giỏ hàng của bạn</h2>
 
 			<div class="register-req">
 				<p>Làm ơn đăng ký hoặc đăng nhập để thanh toán giỏ hàng và xem lại lịch sử mua hàng</p>

@@ -5,7 +5,7 @@
 		<div class="container">
 			<div class="breadcrumbs">
 				<ol class="breadcrumb">
-				  <li><a href="{{URL::to('/')}}">Trang chủ</a></li>
+				<a href="{{URL::to('/')}}" style ="color:#00adc4"class="btn btn-default fa fa-heart-o" aria-hidden="true" >Trang chủ</a>
 				  <li class="active">Thanh toán giỏ hàng</li>
 				</ol>
 			</div>

@@ -1,7 +1,7 @@
 @extends('layout')
 @section('content')
 <div class="features_items"><!--features_items-->
-       
+<a href="{{URL::to('/')}}" style ="color:#00adc4"class="btn btn-default fa fa-heart-o" aria-hidden="true" >Trang chủ</a>
                         <h2 class="title text-center">Sản phẩm mới nhất</h2>
                         
                         @foreach($all_product as $key => $product)
