@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                           Thêm thông tin liên hệ
+                           Cập nhật thông tin liên hệ
                         </header>
                          <?php
                             $message = Session::get('message');
@@ -37,7 +37,7 @@
                                     <img src="{{URL::to('public/uploads/contact/'.$val->info_logo)}}" height="100" width="100">
                                 </div>
                                
-                                <button type="submit" name="add_category_product" class="btn btn-info">Thêm liên hệ</button>
+                                <button type="submit" name="add_category_product" class="btn btn-info">Cập Nhật liên hệ</button>
                                 </form>
                                 @endforeach
                             </div>

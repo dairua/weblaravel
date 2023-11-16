@@ -62,7 +62,7 @@
             <td>{!! $post->post_slug !!}</td>
             <td>{!! $post->post_desc !!}</td>
             <td>{!! $post->post_meta_keywords !!}</td>
-            <td>{{ $post->cate_post_id }}</td>
+            <td>{{ $post->cate_post->cate_post_name }}</td>
             <td>@if($post->post_status==0)
                 Hiển thị
                 @else

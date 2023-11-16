@@ -377,7 +377,7 @@
                             <h2>Dịch vụ</h2>
                             <ul class="nav nav-pills nav-stacked">
                                 <li><a href="#">Trợ giúp trực tuyến</a></li>
-                                <li><a href="#">liên hệ với chúng tôi</a></li>
+                                <li><a href="#">Liên hệ với chúng tôi</a></li>
                                 <li><a href="#">Tình trạng đơn hàng</a></li>
                                 <li><a href="#">Thay đổi địa chỉ</a></li>
                                 <li><a href="#">Các câu hỏi thường gặp</a></li>
@@ -463,6 +463,7 @@
     <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0&appId=2339123679735877&autoLogAppEvents=1"></script>
 
+
 <script type="text/javascript">
 $.ajaxSetup({
     headers: {
@@ -525,8 +526,6 @@ $.ajaxSetup({
                
             });
         });
-    
-
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -620,6 +619,19 @@ $.ajaxSetup({
         });
     });
     </script>
+
+<script type="text/javascript">
+    $(document).ready(function(){   
+        $('#sort').on('change',function(){
+            var url=$(this).val();
+            // alert(url);
+            if(url){
+                window.location=url;
+            }
+            return false;
+        });
+    });
+</script>
   
 </body>
 </html>

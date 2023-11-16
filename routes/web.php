@@ -91,12 +91,13 @@ Route::get('/active-category-post/{cate_post_id}','CategoryPost@active_category_
 Route::get('/add-post','PostController@add_post');
 Route::get('/all-post','PostController@all_post');
 Route::get('/delete-post/{post_id}','PostController@delete_post');
+Route::get('/edit-post/{post_id}','PostController@edit_post');
 Route::post('/save-post','PostController@save_post');
+Route::post('/update-post/{post_id}','PostController@update_post');
 
-//Product
+
 // Route::group(['middleware' => 'roles', 'roles'=>['admin','author']], function () {
-	Route::get('/add-product','ProductController@add_product');
-	Route::get('/edit-product/{product_id}','ProductController@edit_product');
+	
 // });
 Route::get('users',
 		[
@@ -109,8 +110,9 @@ Route::get('add-users','UserController@add_users');
 Route::post('store-users','UserController@store_users');
 Route::post('assign-roles','UserController@assign_roles');
 
-
-
+//Product
+Route::get('/add-product','ProductController@add_product');
+Route::get('/edit-product/{product_id}','ProductController@edit_product');
 Route::get('/delete-product/{product_id}','ProductController@delete_product');
 Route::get('/all-product','ProductController@all_product');
 Route::get('/unactive-product/{product_id}','ProductController@unactive_product');

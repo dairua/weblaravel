@@ -33,7 +33,7 @@ class PostController extends Controller
     }
     public function all_post(){
         $this->AuthLogin();
-    	$all_post = Post::orderBy('post_id')->paginate(10);
+    	$all_post = Post::with('cate_post')->orderBy('post_id')->paginate(10);
     	
     	return view('admin.post.list_post')->with(compact('all_post',$all_post));
 
@@ -94,46 +94,42 @@ class PostController extends Controller
         return redirect()->back()->with('message','Thêm bài viết thành công');
     } 
     
-    // public function edit_product($product_id){
-    //      $this->AuthLogin();
-    //     $cate_product = DB::table('tbl_category_product')->orderby('category_id','desc')->get(); 
-    //     $brand_product = DB::table('tbl_brand')->orderby('brand_id','desc')->get(); 
+    public function edit_post($post_id){
+        $post=Post::find($post_id);
+        $cate_post = CatePost::orderBy('cate_post_id')->get(); 
+        return view('admin.post.edit_post')->with(compact('post','cate_post'));
+    }
+    public function update_post(Request $request,$post_id){
+         $this->AuthLogin();
+         $data=$request->all();
+         $post=Post::find($post_id);
+         $post->post_title = $data['post_title'];
+         $post->post_slug = $data['post_slug'];
+         $post->post_content = $data['post_content'];
+         $post->post_meta_keywords = $data['post_meta_keywords'];
+         $post->post_meta_desc = $data['post_meta_desc'];
+         $post->post_desc = $data['post_desc'];
+         $post->cate_post_id = $data['cate_post_id'];
+         $post->post_status = $data['post_status'];
+         $post->post_image = $data['post_image'];
+         
+         $get_image = $request->file('post_image');
+         $path='public/uploads/post';
+         if($get_image){
+            $post_image_old = $post->post_image;
+            $path1 ='public/uploads/post'.$post_image_old;
+            unlink($path1);
 
-    //     $edit_product = DB::table('tbl_product')->where('product_id',$product_id)->get();
-
-    //     $manager_product  = view('admin.edit_product')->with('edit_product',$edit_product)->with('cate_product',$cate_product)->with('brand_product',$brand_product);
-
-    //     return view('admin_layout')->with('admin.edit_product', $manager_product);
-    // }
-    // public function update_product(Request $request,$product_id){
-    //      $this->AuthLogin();
-    //     $data = array();
-    //     $data['product_name'] = $request->product_name;
-    //     $data['product_quantity'] = $request->product_quantity;
-    //     $data['product_slug'] = $request->product_slug;
-    //     $data['product_price'] = $request->product_price;
-    //     $data['product_desc'] = $request->product_desc;
-    //     $data['product_content'] = $request->product_content;
-    //     $data['category_id'] = $request->product_cate;
-    //     $data['brand_id'] = $request->product_brand;
-    //     $data['product_status'] = $request->product_status;
-    //     $get_image = $request->file('product_image');
-        
-    //     if($get_image){
-    //                 $get_name_image = $get_image->getClientOriginalName();
-    //                 $name_image = current(explode('.',$get_name_image));
-    //                 $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-    //                 $get_image->move('public/uploads/product',$new_image);
-    //                 $data['product_image'] = $new_image;
-    //                 DB::table('tbl_product')->where('product_id',$product_id)->update($data);
-    //                 Session::put('message','Cập nhật sản phẩm thành công');
-    //                 return Redirect::to('all-product');
-    //     }
-            
-    //     DB::table('tbl_product')->where('product_id',$product_id)->update($data);
-    //     Session::put('message','Cập nhật sản phẩm thành công');
-    //     return Redirect::to('all-product');
-    // }
+             $get_name_image = $get_image->getClientOriginalName();
+             $name_image = current(explode('.',$get_name_image));
+             $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
+             $get_image->move($path,$new_image);
+             $post->post_image = $new_image;
+         }
+         $post->save();
+         
+         return redirect()->back()->with('message','Cập nhật bài viết thành công');
+    }
     public function delete_post($post_id){
         $this->AuthLogin();
         $post = Post::find($post_id);

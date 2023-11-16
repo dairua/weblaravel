@@ -2,13 +2,30 @@
 @section('content')
 <div class="features_items"><!--features_items-->
 <a href="{{URL::to('/')}}" style ="color:#00adc4"class="btn btn-default fa fa-heart-o" aria-hidden="true" >Trang chủ</a>
-                       <div class="fb-share-button" data-href="http://localhost/tutorial_youtube/shopbanhanglaravel" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{$url_canonical}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
-                       <div class="fb-like" data-href="{{$url_canonical}}" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="false"></div>
+                       <!-- <div class="fb-share-button" data-href="http://localhost/tutorial_youtube/shopbanhanglaravel" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{$url_canonical}}&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
+                       <div class="fb-like" data-href="{{$url_canonical}}" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="false"></div> -->
                         @foreach($category_name as $key => $name)
                        
                         <h2 class="title text-center">{{$name->category_name}}</h2>
 
                         @endforeach
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="amount">Sắp xếp theo</label>
+                                <form>
+                                    @csrf
+                                    <select name="sort" id="sort" class="form-control">
+                                        <option value="{{Request::url()}}?sort_by=none">--Lọc--</option>
+                                        <option value="{{Request::url()}}?sort_by=tang_dan">--Giá tăng dần--</option>
+                                        <option value="{{Request::url()}}?sort_by=giam_dan">--Giá giảm dần--</option>
+                                        <option value="{{Request::url()}}?sort_by=kytu_az">--A đến Z--</option>
+                                        <option value="{{Request::url()}}?sort_by=kytu_za">--Z đến A--</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </div>
+                        
                         @foreach($category_by_id as $key => $product)
                         <a href="{{URL::to('/chi-tiet/'.$product->product_slug)}}">
                         <div class="col-sm-4">
