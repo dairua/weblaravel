@@ -35,12 +35,12 @@
                                       
                                 </div>
                            
-                                <div class="choose">
+                                <!-- <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
                                         <li><a href="#"><i class="fa fa-plus-square"></i>Yêu thích</a></li>
                                         <li><a href="#"><i class="fa fa-plus-square"></i>So sánh</a></li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         @endforeach

@@ -1,0 +1,372 @@
+
+
+
+//JQueryIsLoaded();
+(function (window, document, jqueryVer, callback) {
+	var $, state, done = false;
+	if (!($ = window.jQuery) || jqueryVer > $.fn.jquery || callback($, done)) {
+		var script = document.createElement("script");
+		script.type = "text/javascript",
+		script.src = "https://productviewedhistory.sapoapps.vn/Scripts/jquery-2.1.3.min.js",
+		script.onload = script.onreadystatechange = function () {
+			if (!done && (!(state = this.readyState) || state === "loaded" || state === "complete")) {
+				callback(($ = window.jQuery).noConflict(1), done = true);
+				$(script).remove();
+			}
+		};
+		try {
+			document.body.appendChild(script);
+		}
+		catch (ex) {
+			try {
+				document.documentElement.childNodes[0].appendChild(script);
+			}
+			catch (ex) { }
+		}
+	}
+})(window, document, "2.1.3", function ($, done) {
+    
+    var storeAliasBizweb = "thegioihangdep";
+    prLoadCookie("thegioihangdep");
+    prCalculAddToCart();
+    $(document).ready(function () {
+        
+        if (Bizweb.template == "product") {
+            prCalculViewed();
+        }
+        $(window).resize(function() {
+            styleMobile();
+        });
+        styleMobile();
+        prCheckCookie();
+    });
+
+    function checkAutoEmbed(){
+        var productRecent = "";
+        productRecent += "<div class=\"pr-module-title\">";
+        productRecent += "</div>";
+        productRecent += "<div class=\"pr-slide-wrap\">";
+        productRecent += "<ul class=\"pr-list-product-slide\">";
+        productRecent += "</ul>";
+        productRecent += "</div>";
+        productRecent += "<div class=\"pr-slide\">";
+        productRecent += "</div>";
+
+        if($(".pr-module-box").length < 1){
+            if(Bizweb.template == "product"){
+                productRecent = "<div class=\"pr-module-box\" style=\"display: none\">" + productRecent;
+                productRecent += "</div>";
+                productRecent += "<link href=\"https://productviewedhistory.sapoapps.vn//Content/styles/css/ProductRecentStyle.css\" rel=\"stylesheet\" />";
+                //$(".container:last").append(productRecent);
+                $("footer:last").before(productRecent);
+            }
+        } else {
+            productRecent += "<link href=\"https://productviewedhistory.sapoapps.vn//Content/styles/css/ProductRecentStyle.css\" rel=\"stylesheet\" />";
+            $(".pr-module-box").append(productRecent);
+        }
+    }
+    function prCheckCookie() {
+        if(window.productRecentId != undefined && window.productRecentId != ""){
+            var productRecentId = window.productRecentId + "";
+            var productRecents = prGetCookie("productRecents");
+
+            var productRecentArray = [];
+            if (productRecents == "") {
+                productRecentArray.unshift(productRecentId);
+            } else {
+                productRecentArray = productRecents.split(",");
+                var cookieIndex = productRecentArray.indexOf(productRecentId);
+                if (cookieIndex != -1) {
+                    productRecentArray.splice(cookieIndex, 1);
+                }
+                if (storeAliasBizweb && storeAliasBizweb == "machtudong"){
+                    if (productRecentArray.length >= 12) {
+                        var numberRemove = productRecentArray.length - 11;
+                        productRecentArray.splice(9, numberRemove);
+                    }
+                }
+                else{
+                    if (productRecentArray.length >= 10) {
+                        var numberRemove = productRecentArray.length - 9;
+                        productRecentArray.splice(9, numberRemove);
+                    }
+                }
+                
+
+                
+                productRecentArray.unshift(productRecentId);
+            }
+            prSetCookie("productRecents", productRecentArray, 3600);
+            
+        }
+    }
+
+    function prLoadCookie(storeAlias) {
+        var productRecents = prGetCookie("productRecents");
+        if (productRecents != "") {
+            var productIds = productRecents;
+            $.ajax({
+                url: "https://productviewedhistory.sapoapps.vn//ProductViewed/GetProducts",
+                method: "POST",
+                crossDomain: true,
+                dataType: 'jsonp',
+                data: { storeAlias: storeAlias, productIds: productIds }
+            }).done(function (data) {
+                if (data.code == 0 && data.data != undefined) {
+                    prFillData(data.data.productItems);
+                    styleMobile();
+                }
+            }).fail(function(data){
+            });
+        }
+    }
+
+    function prFillData(data) {
+        var htmlText = "";
+        var price = "";
+        for (var i = 0; i < data.length; i++) {
+            if (parseFloat(data[i].Price) == 0) {
+                price = "Liên hệ";
+            } else {
+                price = Bizweb.formatMoney(parseFloat(data[i].Price), "{{amount_no_decimals_with_comma_separator}}₫");
+                }
+            htmlText += "<li class='pr-product-element'>";
+            htmlText += "<a class='pr-link' href='/products/" + data[i].ProductAlias + "?prsource=recently'>";
+            htmlText += "<div class='pr-image'>";
+            htmlText += "<img src='"+data[i].Image+"' />";
+            htmlText += "</div>";
+            htmlText += "<div class='pr-name'>" + data[i].Name + "</div>";
+            htmlText += "<div class='pr-price money'>" + price + "</div>";
+            htmlText += "</a>"
+            htmlText += "</li>";
+        }
+        $("ul.pr-list-product-slide").append(htmlText);
+        $(".pr-module-title").text("SẢN PHẨM ĐÃ XEM");
+        $(".pr-module-title").css({"color": "#000000","text-align": "center", "font-weight": "bold", "font-style": "normal", "font-size": "15px"});
+        $(".pr-name").css({"color": "#000000"});
+        $(".pr-price").css({"color": "#ff0000"});
+        $(".pr-module-box").css({"border-color": "#ffffff", "background-color": "#f9f9f9"});
+        $(".pr-module-box").show();
+        if (storeAliasBizweb && storeAliasBizweb == "machtudong"){
+	        if(data.length > 6){
+		        var numberPaginator = Math.ceil(data.length/6);
+		        var htmlPaginator = "<ul class='pr-paginator'>";
+		        for(var i = 0; i < numberPaginator; i++ ) {
+			        if(i == 0) {
+				        htmlPaginator += "<li class='pr-paginator-item pr-selected'><span class='pr-paginator-dot'></span></li>";
+			        } else {
+				        htmlPaginator += "<li class='pr-paginator-item'><span class='pr-paginator-dot'></span></li>";
+			        }
+		        }
+		        htmlPaginator += "</ul>";
+		        $(".pr-slide").append(htmlPaginator);
+		        prAnimate();
+	        }
+        }
+        else if(storeAliasBizweb && data.length > 5){
+	        var numberPaginator = Math.ceil(data.length/5);
+	        var htmlPaginator = "<ul class='pr-paginator'>";
+	        for(var i = 0; i < numberPaginator; i++ ) {
+		        if(i == 0) {
+			        htmlPaginator += "<li class='pr-paginator-item pr-selected'><span class='pr-paginator-dot'></span></li>";
+		        } else {
+			        htmlPaginator += "<li class='pr-paginator-item'><span class='pr-paginator-dot'></span></li>";
+		        }
+	        }
+	        htmlPaginator += "</ul>";
+	        $(".pr-slide").append(htmlPaginator);
+	        prAnimate();
+        }
+    }
+
+    function prSetCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+d.toUTCString();
+        var path = "path=/";
+        document.cookie = cname + "=" + cvalue + "; " + expires + "; " + path;
+    }
+
+    function prGetCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1);
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+
+    //ham gui request len server de tinh so lươt view va so lươt add-to-cart
+    function prSendRequestToStatistic(addToCartOrViewed, prSource) {
+        $.ajax({
+            url: "https://productviewedhistory.sapoapps.vn//ProductViewed/CalculViewed",
+            method: "GET",
+            crossDomain: true,
+            dataType: 'jsonp',
+            data: { alias: "thegioihangdep", addToCartOrViewed: addToCartOrViewed, source: prSource }
+        });
+    }
+
+    function prCheckParam(param) {
+        if (param = new RegExp("[?&]" + encodeURIComponent(param) + "=([^&]*)").exec(location.search)) return decodeURIComponent(param[1])
+    }
+
+    function prCalculViewed() {
+        var prSource = prCheckParam("prsource");
+        prSendRequestToStatistic(false, prSource);
+    }
+
+    function prCalculAddToCart() {
+        for (var i = 0; i < document.getElementsByTagName('form').length; i++) {
+            var form = document.getElementsByTagName('form')[i];
+            if (form.getAttribute('action') != null) {
+                if (form.getAttribute('action').indexOf('/cart/add') != -1) {
+                    form.addEventListener("submit", function () {
+                        var prSource = prCheckParam("prsource");
+                        prSendRequestToStatistic(true, prSource);
+                    });
+                }
+            }
+        }
+
+        $(document).ajaxSend(function (event, request, settings) {
+            var prSource = "";
+            if (settings.url.indexOf("/cart/add.js") != -1) {
+                if(window.productRecentVariantId != undefined){
+                    var patt1 = /variantid=[0-9]+/g;
+                    var patt2 = /[0-9]+/g;
+                    var results = settings.data.toLowerCase().match(patt1);
+                    if(results != null){
+                        for(var i = 0; i < results.length; i++){
+                            var results2 = results[i].match(patt2);
+                            if(results2 != null && results2.length > 0){
+                                if(window.productRecentVariantId.indexOf(results2[0]) != -1){
+                                    prSource = prCheckParam("prsource");
+                                }
+                            }
+                        }
+                    }
+                }
+                prSendRequestToStatistic(true, prSource);
+            }
+        });
+    }
+
+    function prAnimate(){
+        if (storeAliasBizweb == '' || storeAliasBizweb == null) return;
+	    if (storeAliasBizweb == "machtudong"){
+		    $("li.pr-paginator-item:not(.pr-selected)").on("click",function () {
+                var listItem = $("li.pr-paginator-item");
+                var indexThis = listItem.index(this);
+                var indexItemStart = 6*indexThis + 1;
+                var indexItemEnd = 6*indexThis + 6;
+                $(this).fadeOut(10, function () {
+                    $(".pr-list-product-slide li.pr-product-element").css("display", "none");
+                    $(".pr-list-product-slide li.pr-product-element:nth-child(n+"+ indexItemStart + "):nth-child(-n+"+ indexItemEnd + ")").css("display", "inline-block");
+                    $("li.pr-paginator-item").removeClass("pr-selected");
+                    $(this).addClass("pr-selected");
+                    $(this).show();
+                    $("li.pr-paginator-item").unbind("click");
+                    prAnimate();
+                });
+            });
+	    }
+        else{
+		    $("li.pr-paginator-item:not(.pr-selected)").on("click",function () {
+                var listItem = $("li.pr-paginator-item");
+                var indexThis = listItem.index(this);
+                var indexItemStart = 5*indexThis + 1;
+                var indexItemEnd = 5*indexThis + 5;
+                $(this).fadeOut(10, function () {
+                    $(".pr-list-product-slide li.pr-product-element").css("display", "none");
+                    $(".pr-list-product-slide li.pr-product-element:nth-child(n+"+ indexItemStart + "):nth-child(-n+"+ indexItemEnd + ")").css("display", "inline-block");
+                    $("li.pr-paginator-item").removeClass("pr-selected");
+                    $(this).addClass("pr-selected");
+                    $(this).show();
+                    $("li.pr-paginator-item").unbind("click");
+                    prAnimate();
+                });
+            });
+	    }
+    }
+
+    
+
+    
+
+    
+
+    //Hàm format string như C# sử dụng "Test format {0}".format("abc")
+    if (!String.prototype.format) {
+        String.prototype.format = function () {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function (match, number) {
+                return typeof args[number] != 'undefined' ? args[number] : match;
+            });
+        };
+    }
+
+    if (!Number.prototype.formatMoney) {
+        Number.prototype.formatMoney = function (c, d, t) {
+            var n = this,
+            c = isNaN(c = Math.abs(c)) ? 2 : c,
+            d = d == undefined ? "." : d,
+            t = t == undefined ? "," : t,
+            s = n < 0 ? "-" : "",
+            i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+            j = (j = i.length) > 3 ? j % 3 : 0;
+            return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+        };
+    }
+
+    function styleMobile() {
+if (storeAliasBizweb == '') return;
+        var moduleWidth = $(".pr-module-box").width();
+        $(".pr-device").remove();
+        if(moduleWidth >= 800){
+            var listItem = $("li.pr-paginator-item");
+            var selectedSelector = $(".pr-selected");
+            if (storeAliasBizweb == "machtudong"){
+                $(".pr-module-box ul.pr-list-product-slide li.pr-product-element").css("width","16%");
+            }
+            else{
+                $(".pr-module-box ul.pr-list-product-slide li.pr-product-element").css("width","20%");
+            }
+            if(selectedSelector.length > 0){
+                var indexSelected = listItem.index(selectedSelector);
+                var indexItemStart = 0;
+                var indexItemEnd = 0;
+                if (storeAliasBizweb == "machtudong"){
+                    indexItemStart = 6*indexSelected + 1;
+                    indexItemEnd = 6*indexSelected + 6;
+                }
+                else{
+                    indexItemStart = 5*indexSelected + 1;
+                    indexItemEnd = 5*indexSelected + 5;
+                }
+               
+                $(".pr-module-box ul.pr-list-product-slide li.pr-product-element").css("display","none");
+                $(".pr-list-product-slide li.pr-product-element:nth-child(n+"+ indexItemStart + "):nth-child(-n+"+ indexItemEnd + ")").css("display", "inline-block");
+                $(".pr-module-box .pr-slide").css("display","block");
+            } else {
+                $(".pr-module-box .pr-slide").css("display","none");
+            }
+        } else if(moduleWidth < 800 && moduleWidth > 600) {
+            $(".pr-module-box ul.pr-list-product-slide li.pr-product-element").css("width","50%");
+            $(".pr-module-box ul.pr-list-product-slide li.pr-product-element").css("display","inline-block");
+            $(".pr-module-box ul.pr-list-product-slide li.pr-product-element:nth-child(n+7)").css("display","none");
+            $(".pr-module-box .pr-slide").css("display","none");
+            $(".pr-module-box ul.pr-list-product-slide li.pr-product-element:nth-child(2n+0)").after("<div class=\"pr-device\"></div>");
+        } else if(moduleWidth <= 600){
+            $(".pr-module-box ul.pr-list-product-slide li.pr-product-element").css("width","100%");
+            $(".pr-module-box ul.pr-list-product-slide li.pr-product-element").css("display","inline-block");
+            $(".pr-module-box ul.pr-list-product-slide li.pr-product-element:nth-child(n+6)").css("display","none");
+            $(".pr-module-box ul.pr-list-product-slide li.pr-product-element:nth-of-type(n+6)").css("display","none");
+            //$(".pr-module-box ul.pr-list-product-slide li.pr-product-element:nth-child(n+0)").after("<div class=\"pr-device\"></div>");
+            $(".pr-module-box .pr-slide").css("display","none");
+        }
+    }
+    
+});

@@ -12,7 +12,7 @@
     <link  rel="icon" type="image/x-icon" href="" />
     
     {{--   <meta property="og:image" content="{{$image_og}}" />  
-      <meta property="og:site_name" content="http://localhost/tutorial_youtube/shopbanhanglaravel" />
+      <meta property="og:site_name" content="http://localhost/Laravel/Mylaravel" />
       <meta property="og:description" content="{{$meta_desc}}" />
       <meta property="og:title" content="{{$meta_title}}" />
       <meta property="og:url" content="{{$url_canonical}}" />
@@ -59,9 +59,9 @@
                         <div class="social-icons pull-right">
                             <ul class="nav navbar-nav">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <!-- <li><a href="#"><i class="fa fa-twitter"></i></a></li>
                                 <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li> -->
                                 <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                             </ul>
                         </div>
@@ -77,15 +77,15 @@
                         <div class="logo pull-left">
                             <a href="index.html"><img src="{{('public/frontend/images/logohm.png')}}" alt="" /></a>
                         </div>
-                        <div class="btn-group pull-right">
+                        <!-- <div class="btn-group pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    Vietnamses
+                                    Ngôn Ngữ
                                     <span class="caret"></span>
-                                </button>
+                                </button>   
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">VN</a></li>
-                                    <li><a href="#">ORTHER</a></li>
+                                    <li><a href="#">Việt Nam</a></li>
+                                    <li><a href="#">Tiếng Anh</a></li>
                                 </ul>
                             </div>
                             
@@ -99,13 +99,13 @@
                                     <li><a href="#">Tiền Việt</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
                                
-                                <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li>
+                                <!-- <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li> -->
                                 <?php
                                    $customer_id = Session::get('customer_id');
                                    $shipping_id = Session::get('shipping_id');
@@ -213,6 +213,9 @@
                                 height: 400px;
                             }
                         </style>
+
+
+
                         <div class="carousel-inner">
                         @php 
                             $i = 0;
@@ -384,7 +387,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <!-- <div class="col-sm-2">
                         <div class="single-widget">
                             <h2>Qick Shop</h2>
                             <ul class="nav nav-pills nav-stacked">
@@ -395,7 +398,7 @@
                                 <li><a href="#">BKAV</a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-sm-2">
                         <div class="single-widget">
                             <h2>Chính sách</h2>

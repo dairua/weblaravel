@@ -23,12 +23,12 @@ class ProductController extends Controller
     }
     public function add_product(){
         $this->AuthLogin();
-        
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
         $cate_product = DB::table('tbl_category_product')->orderby('category_id','desc')->get(); 
         $brand_product = DB::table('tbl_brand')->orderby('brand_id','desc')->get(); 
        
 
-        return view('admin.add_product')->with('cate_product', $cate_product)->with('brand_product',$brand_product)->with('category_post', $category_post);
+        return view('admin.add_product')->with('category_post',$category_post)->with('cate_product', $cate_product)->with('brand_product',$brand_product)->with('category_post', $category_post);
     	
 
     }

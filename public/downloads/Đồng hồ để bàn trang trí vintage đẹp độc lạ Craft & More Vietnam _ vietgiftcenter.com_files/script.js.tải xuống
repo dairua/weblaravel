@@ -1,0 +1,137 @@
+(function (window, document, callback) {
+	var $, state, done = false;
+	if (!($ = window.jQuery) || callback($, done)) {
+		var script = document.createElement("script");
+		script.type = "text/javascript",
+		script.src = "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
+		script.onload = script.onreadystatechange = function () {
+			if (!done && (!(state = this.readyState) || state === "loaded" || state === "complete")) {
+				callback(($ = window.jQuery).noConflict(1), done = true);
+				$(script).remove();
+			}
+		};
+		try {
+			document.body.appendChild(script);
+		}
+		catch (ex) {
+			try {
+				document.documentElement.childNodes[0].appendChild(script);
+			}
+			catch (ex) { }
+		}
+	}
+})(window, document, function ($, done) {
+	'use strict';
+    if(Bizweb.template == "cart" && $("#bizweb-qty-cart-msg").length == 0){
+        $(".page-title h2").after("<div id='bizweb-qty-cart-msg'></div>")
+    }
+    if(Bizweb.template == "product" && $("#bizweb-qty-msg").length == 0){
+        $(".add-to-cart").after("<div id='bizweb-qty-msg'></div>")
+        if ($("#bizweb-qty-msg").length == 0){
+            $("#add-to-cart-form").after("<div id='bizweb-qty-msg'></div>")
+        }
+    }
+    if(Bizweb.template == "product" && $(".ab_quantitybreak_infor").length == 0){
+        $(".add-to-cart").after("<div class='ab_quantitybreak_infor'></div>")
+            if ($(".ab_quantitybreak_infor").length == 0){
+                $("#add-to-cart-form").after("<div class='ab_quantitybreak_infor'></div>")
+            }
+    }
+    if(Bizweb.template == "product"){
+        if($(".ab_quantitybreak_infor").length > 0 &&  $("#bizweb-qty-msg").length >0){
+            var productObject ;
+            $.ajax({
+                        url: document.location.protocol + '//' +document.location.host + document.location.pathname + ".json",
+                        async: false,
+                        success: function(data){
+                             productObject = data.product;
+                             if(productObject){
+                                setTimeout(function(){ updateQbHtml(productObject); }, 100);
+                             }
+                        }
+            });
+
+           $('.single-option-selector,select[name^=variantId]').change(function(){
+                setTimeout(function(){ updateQbHtml(productObject); }, 100);
+           });
+       }
+    }
+
+    if(Bizweb.template == "cart"){
+        if($("#bizweb-qty-cart-msg").length > 0){
+            $.ajax({
+                        url: document.location.protocol + '//' +document.location.host + "/cart.js",
+                        async: false,
+                        success: function(data){
+                            if(data && data.items){
+                                var discount = 0;
+                                if(data.items.length > 0){
+                                    for(var i =0;i< data.items.length; i++){
+                                        var lineItem = data.items[i];
+                                        if(lineItem.line_price_original){
+                                            discount += lineItem.line_price_original - lineItem.line_price;
+                                        }else{
+                                            discount += lineItem.line_price_orginal - lineItem.line_price;
+                                        }
+                                    }
+                                    if(discount > 0){
+                                       $.ajax({
+                                           url: "https://quantitybreak.bizweb.vn/data/cartMessage?storeAlias=thegioihangdep&discount="+ discount,
+                                           success: function(response){
+                                                $("#bizweb-qty-cart-msg").html(response);
+                                                $("#bizweb-qty-cart-msg").show();       
+                                           }
+                                       });
+                                    }
+                                }
+                            }
+                        }
+            });
+        }
+    }
+
+    function updateQbHtml(product){
+        var $selectedVariantId = $('input[name^=variantId]:checked, select[name^=variantId], input[name=variantId], hidden[name^=variantId],input[name=variantId]',$('form[action="/cart/add"]'));
+        if($selectedVariantId.length >0){
+            var variantId = $selectedVariantId.first().val();
+            if(variantId){
+                $.ajax({
+                    url: document.location.protocol + '//' +document.location.host + "/meta.js",
+                    async: false,
+                    success: function(data){
+                        var currency = data.currency || "VND";
+                        $.ajax({ 
+                            url: "https://quantitybreak.bizweb.vn/data?currency=" + currency + "&money_format=" + data.money_format,
+                            type: "POST",
+                            data:{
+                                variantId: variantId,
+                                product: product,
+                                storeAlias: "thegioihangdep"
+                            },
+                            success: function(data){
+                                if(data.content){
+                                    $(".ab_quantitybreak_infor").html(data.title);
+                                    $("#bizweb-qty-msg").html(data.content);
+                                    $("#bizweb-qty-msg").show();
+                                    $(".ab_quantitybreak_infor").show();
+                                }
+                                else{
+                                    $(".ab_quantitybreak_infor").html("");
+                                    $("#bizweb-qty-msg").html("");
+                                    $("#bizweb-qty-msg").hide();
+                                    $(".ab_quantitybreak_infor").hide();
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    }
+});
+
+
+
+
+
+

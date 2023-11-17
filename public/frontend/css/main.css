@@ -582,10 +582,16 @@ ul.sub-menu {
 	  background: #00adc4 !important;
 }
 
-.item {
+/* .item {
   padding-left: 100px;
+} */
+.fa-heart-o:before {
+  /* content: "\f08a"; */
+  margin-right: 5px !important;
 }
-
+.carousel-inner>.item{
+  width: 85%;
+  margin-left: 85px}
 
 .pricing {
   position: absolute;

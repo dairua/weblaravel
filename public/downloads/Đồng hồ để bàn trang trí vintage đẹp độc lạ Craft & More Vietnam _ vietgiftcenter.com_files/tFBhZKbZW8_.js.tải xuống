@@ -1,0 +1,3 @@
+;/*FB_PKG_DELIM*/
+
+__d("relay-runtime/util/shallowFreeze",[],(function(a,b,c,d,e,f){"use strict";e.exports=function(a){typeof a==="object"&&a!=null&&(Array.isArray(a)||a.constructor===Object)&&Object.freeze(a)}}),null);
