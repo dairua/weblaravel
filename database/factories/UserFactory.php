@@ -1,7 +1,8 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\User;
+use App\Admin;
+use App\Roles;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
@@ -16,12 +17,16 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(User::class, function (Faker $faker) {
+$factory->define(Admin::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'admin_name' => $faker->name,
+        'admin_email' => $faker->unique()->safeEmail,
+        'admin_phone' => '0832905658',
+        'admin_password' => '1e588b997aa4c0e948ef563f98ef13ce',
+
     ];
+});
+$factory->afterCreating(Admin::class, function($admin,$faker){
+    $roles = Roles::where('name','user')->get();
+    $admin->roles()->sync($roles->pluck('id_roles')->toArray());
 });

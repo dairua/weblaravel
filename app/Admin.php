@@ -2,9 +2,11 @@
 
 namespace App;
 
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Admin extends Model
+class Admin extends Authenticatable
 {
     public $timestamps = false; //set time to false
     protected $fillable = [
@@ -16,6 +18,16 @@ class Admin extends Model
  	public function roles(){
  		return $this->belongsToMany('App\Roles');
  	}
+	public function getAuthPassword(){
+		return $this->admin_password;
+	}
+
+	// public function hasAnyRoles($roles){
+	// 	return null !== $this->roles()->whereIn('name',$roles)->first();
+	// }
+	// public function hasRole($role){
+	// 	return null !== $this->roles()->whereIn('name',$role)->first();
+	// }
  	public function hasAnyRoles($roles){
 
  		if(is_array($roles)){

@@ -8,6 +8,7 @@ use Session;
 use App\Social;
 use Socialite;
 use App\Login;
+use Auth;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
@@ -109,7 +110,7 @@ class AdminController extends Controller
     }
 
     public function AuthLogin(){
-        $admin_id = Session::get('admin_id');
+        $admin_id = Auth::id();
         if($admin_id){
             return Redirect::to('dashboard');
         }else{

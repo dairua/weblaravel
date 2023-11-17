@@ -57,7 +57,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <img alt="" src="{{('public/backend/images/dai.png')}}">
                 <span class="username">
                 	<?php
-					$name = Session::get('admin_name');
+					$name = Auth::user()->admin_name;
 					if($name){
 						echo $name;
 					}
@@ -69,7 +69,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <ul class="dropdown-menu extended logout">
                 <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin thêm</a></li>
                 <li><a href="#"><i class="fa fa-cog"></i>Cài đặt</a></li>
-                <li><a href="{{URL::to('/logout')}}"><i class="fa fa-key"></i>Đăng xuất</a></li>
+                <li><a href="{{URL::to('/logout-auth')}}"><i class="fa fa-key"></i>Đăng xuất</a></li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -187,6 +187,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                       
                     </ul>
                 </li>
+            
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-clone" aria-hidden="true"></i>
@@ -198,6 +199,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                       
                     </ul>
                 </li>
+                @hasrole(['admin','author'])
                  <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-users" aria-hidden="true"></i>
@@ -209,6 +211,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                       
                     </ul>
                 </li>
+                @endhasrole
+
+                @impersonate
+                <li class="sub-menu">
+                   
+                        <span><a href="{{URL::to('/impersonate-destroy')}}">Stop chuyển quyền</a></span>
+                    
+                </li>
+                @endimpersonate
              
             </ul>            </div>
         <!-- sidebar menu end-->

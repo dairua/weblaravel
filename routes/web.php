@@ -21,6 +21,7 @@ Route::get('/lien-he','ContactController@lien_he' );
 Route::get('/information','ContactController@information' );
 Route::post('/save-infor','ContactController@save_infor' );
 Route::post('/update-infor/{info_id}','ContactController@update_infor' );
+
 //Danh muc san pham trang chu
 Route::get('/danh-muc/{slug_category_product}','CategoryProduct@show_category_home');
 Route::get('/thuong-hieu/{brand_slug}','BrandProduct@show_brand_home');
@@ -96,19 +97,24 @@ Route::post('/save-post','PostController@save_post');
 Route::post('/update-post/{post_id}','PostController@update_post');
 
 
-// Route::group(['middleware' => 'roles', 'roles'=>['admin','author']], function () {
-	
-// });
-Route::get('users',
-		[
-			'uses'=>'UserController@index',
-			'as'=> 'Users',
-			'middleware'=> 'roles'
-			// 'roles' => ['admin','author']
-		]);
-Route::get('add-users','UserController@add_users');
+Route::group(['middleware' => 'auth.roles'], function () {
+	Route::get('/add-product','ProductController@add_product');
+    Route::get('/edit-product/{product_id}','ProductController@edit_product');
+});
+// Route::get('users',
+// 		[
+// 			'users'=>'UserController@index',
+// 			'as'=> 'Users',
+// 			'middleware'=> 'auth.roles',
+// 			// 'auth.roles' => ['admin','author'],
+// 		]);
+Route::get('users','UserController@index')->middleware('auth.roles');
+Route::get('impersonate/{admin_id}','UserController@impersonate');
+Route::get('impersonate-destroy','UserController@impersonate_destroy');
+Route::get('delete-user-roles/{admin_id}','UserController@delete_user_roles')->middleware('auth.roles');
+Route::get('add-users','UserController@add_users')->middleware('auth.roles');
 Route::post('store-users','UserController@store_users');
-Route::post('assign-roles','UserController@assign_roles');
+Route::post('assign-roles','UserController@assign_roles')->middleware('auth.roles');
 
 //Product
 Route::get('/add-product','ProductController@add_product');
@@ -181,3 +187,8 @@ Route::get('/active-slide/{slide_id}','SliderController@active_slide');
 
 
 //Authentication
+Route::get('/register-auth','AuthController@register_auth');
+Route::get('/login-auth','AuthController@login_auth');
+Route::get('/logout-auth','AuthController@logout_auth');
+Route::post('/register','AuthController@register');
+Route::post('/login','AuthController@login');
