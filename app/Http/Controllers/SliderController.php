@@ -9,6 +9,7 @@ use Session;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use DB;
+use Toastr;
 class SliderController extends Controller
 {
 	public function AuthLogin(){
@@ -30,14 +31,14 @@ class SliderController extends Controller
     public function unactive_slide($slide_id){
         $this->AuthLogin();
         DB::table('tbl_slider')->where('slider_id',$slide_id)->update(['slider_status'=>0]);
-        Session::put('message','Không kích hoạt slider thành công');
+        Toastr::error('Không kích hoạt slider thành công','Thất bại');
         return Redirect::to('manage-slider');
 
     }
     public function active_slide($slide_id){
         $this->AuthLogin();
         DB::table('tbl_slider')->where('slider_id',$slide_id)->update(['slider_status'=>1]);
-        Session::put('message','Kích hoạt slider thành công');
+        Toastr::success('Kích hoạt slider thành công','Thành công');
         return Redirect::to('manage-slider');
 
     }
@@ -61,10 +62,10 @@ class SliderController extends Controller
             $slider->slider_status = $data['slider_status'];
             $slider->slider_desc = $data['slider_desc'];
            	$slider->save();
-            Session::put('message','Thêm slider thành công');
+               Toastr::success('Thêm slider thành công','Thành công');
             return Redirect::to('add-slider');
         }else{
-        	Session::put('message','Làm ơn thêm hình ảnh');
+        	Toastr::warning('Làm ơn thêm hình ảnh','Cảnh báo');
     		return Redirect::to('add-slider');
         }
        	
@@ -72,7 +73,7 @@ class SliderController extends Controller
     public function delete_slide(Request $request, $slide_id){
         $slider = Slider::find($slide_id);
         $slider->delete();
-        Session::put('message','Xóa slider thành công');
+        Toastr::success('Xóa slider thành công','Thành công');
         return redirect()->back();
 
     }

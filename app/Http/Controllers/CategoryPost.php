@@ -44,8 +44,7 @@ class CategoryPost extends Controller
         $category_post->cate_post_desc= $data['cate_post_desc'];
         $category_post->cate_post_status= $data['cate_post_status'];
         $category_post->save();
-    	
-    	Session::put('message','Thêm danh mục bài viết thành công');
+    	Toastr::success('Thêm danh mục bài viết thành công','Thành công');
     	return redirect()->back();
     }
     public function edit_category_post($category_post_id){
@@ -61,21 +60,21 @@ class CategoryPost extends Controller
         $category_post->cate_post_slug= $data['cate_post_slug'];
         $category_post->cate_post_desc= $data['cate_post_desc'];
         $category_post->save();
-    	
+    	Toastr::success('Cập Nhật danh mục bài viết thành công','Thành công');
     	Session::put('message','Cập Nhật danh mục bài viết thành công');
     	return redirect('/all-category-post');
     }
     public function unactive_category_post($cate_post_id){
         $this->AuthLogin();
         DB::table('tbl_category_post')->where('cate_post_id',$cate_post_id)->update(['cate_status'=>1]);
-        Session::put('message','Không kích hoạt danh mục sản phẩm thành công');
+        Toastr::error('Không kích hoạt danh mục sản phẩm thành công','Thất bại');
         return Redirect::to('all-category-post');
 
     }
     public function active_category_post($cate_post_id){
         $this->AuthLogin();
         DB::table('tbl_category_post')->where('cate_post_id',$cate_post_id)->update(['cate_status'=>0]);
-        Session::put('message','Kích hoạt danh mục sản phẩm thành công');
+        Toastr::success('Kích hoạt danh mục sản phẩm thành công','Thành công');
         return Redirect::to('all-category-post');
 
     }
@@ -83,8 +82,7 @@ class CategoryPost extends Controller
     public function delete_category_post($cate_id){
         $category_post = CatePost::find($cate_id);
         $category_post->delete();
-    	
-    	Session::put('message','Xóa danh mục bài viết thành công');
+    	Toastr::success('Xóa danh mục bài viết thành công','Thành công');
     	return redirect()->back();
     }
 

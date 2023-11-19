@@ -10,6 +10,7 @@ use App\Admin;
 use App\Catepost;
 use Session;
 use Auth;
+use Toastr;
 class UserController extends Controller
 {
     /**
@@ -40,18 +41,21 @@ class UserController extends Controller
     }
     public function delete_user_roles($admin_id){
         if(Auth::id()==$admin_id){
-            return redirect()->back()->with('message','Không được tự hủy');
+            Toastr::warning('Không được tự hủy','Cảnh báo');
+            return redirect()->back();
         }
         $admin = Admin::find($admin_id);
         if($admin){
             $admin->roles()->detach();
             $admin->delete();
         }
-        return redirect()->back()->with('message','Xóa user thành công');
+        Toastr::success('Xóa user thành công','Thành công');
+        return redirect()->back();
     }
     public function assign_roles(Request $request){
         if(Auth::id()==$request->admin_id){
-            return redirect()->back()->with('message','Không được tự phân quyền');
+            Toastr::warning('Không được tự phân quyền','Cảnh báo');
+            return redirect()->back();
         }
         // $data = $request->all();
         $user = Admin::where('admin_email',$request->admin_email)->first();
@@ -65,7 +69,8 @@ class UserController extends Controller
         if($request->admin_role){
            $user->roles()->attach(Roles::where('name','admin')->first());     
         }
-        return redirect()->back()->with('message','Cấp quyền thành công');
+        Toastr::success('Cấp quyền thành công','Thành công');
+        return redirect()->back();
     }
     public function store_users(Request $request){
         $data = $request->all();
@@ -76,7 +81,7 @@ class UserController extends Controller
         $admin->admin_password = md5($data['admin_password']);
         $admin->roles()->attach(Roles::where('name','user')->first());
         $admin->save();
-        Session::put('message','Thêm users thành công');
+        Toastr::success('Thêm users thành công','Thành công');
         return Redirect::to('users');
     }
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Session;
+use Toastr;
 use App\Contact;
 use App\Slider;
 use App\Catepost;
@@ -52,8 +53,8 @@ class ContactController extends Controller
             $contact->info_logo=$new_image;
         }
         $contact->save();
-        
-        return redirect()->back()->with('message','Thêm liên hệ thành công');
+        Toastr::success('Thêm liên hệ thành công','Thành công');
+        return redirect()->back();
 
     }
 
@@ -74,7 +75,7 @@ class ContactController extends Controller
             $contact->info_logo=$new_image;
         }
         $contact->save();
-        
-        return redirect()->back()->with('message','Cập Nhật liên hệ thành công');
+        Toastr::success('Cập Nhật liên hệ thành công','Thành công');
+        return redirect()->back();
     }
 }

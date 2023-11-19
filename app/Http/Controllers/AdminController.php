@@ -9,6 +9,7 @@ use App\Social;
 use Socialite;
 use App\Login;
 use Auth;
+use Toastr;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Validator;
@@ -27,7 +28,8 @@ class AdminController extends Controller
             $account_name = Login::where('admin_id',$authUser->user)->first();
             Session::put('admin_name',$account_name->admin_name);
             Session::put('admin_id',$account_name->admin_id);
-            return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');  
+            Toastr::success('Đăng nhập Admin thành công','Thành công');
+            return redirect('/dashboard');  
     }
     public function findOrCreateUser($users, $provider){
             $authUser = Social::where('provider_user_id', $users->id)->first();
@@ -61,8 +63,8 @@ class AdminController extends Controller
             $account_name = Login::where('admin_id',$hieu->user)->first();
             Session::put('admin_name',$account_name->admin_name);
             Session::put('admin_id',$account_name->admin_id); 
-          
-            return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');
+            Toastr::success('Đăng nhập Admin thành công','Thành công');
+            return redirect('/dashboard');
 
 
     }
@@ -80,7 +82,8 @@ class AdminController extends Controller
             $account_name = Login::where('admin_id',$account->user)->first();
             Session::put('admin_name',$account_name->admin_name);
             Session::put('admin_id',$account_name->admin_id);
-            return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');
+            Toastr::success('Đăng nhập Admin thành công','Thành công');
+            return redirect('/dashboard');
         }else{
 
             $hieu = new Social([
@@ -105,7 +108,8 @@ class AdminController extends Controller
             $account_name = Login::where('admin_id',$account->user)->first();
             Session::put('admin_name',$account_name->admin_name);
             Session::put('admin_id',$account_name->admin_id);
-            return redirect('/dashboard')->with('message', 'Đăng nhập Admin thành công');
+            Toastr::success('Đăng nhập Admin thành công','Thành công');
+            return redirect('/dashboard');
         } 
     }
 
@@ -145,7 +149,7 @@ class AdminController extends Controller
                 return Redirect::to('/dashboard');
             }
         }else{
-                Session::put('message','Mật khẩu hoặc tài khoản bị sai.Làm ơn nhập lại');
+                Toastr::error('Mật khẩu hoặc tài khoản bị sai.Làm ơn nhập lại','Thất bại');
                 return Redirect::to('/admin');
         }
        
@@ -155,6 +159,7 @@ class AdminController extends Controller
         $this->AuthLogin();
         Session::put('admin_name',null);
         Session::put('admin_id',null);
+        Toastr::success('Đăng xuất admin thành công','Thành công');
         return Redirect::to('/admin');
     }
 }

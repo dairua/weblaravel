@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Coupon;
 use Session;
+use Toastr;
 
 use Illuminate\Support\Facades\Redirect;
 session_start();
@@ -16,7 +17,8 @@ class CouponController extends Controller
         if($coupon==true){
           
             Session::forget('coupon');
-            return redirect()->back()->with('message','Xóa mã khuyến mãi thành công');
+			Toastr::success('Xóa mã khuyến mãi thành công','Thành công');
+            return redirect()->back();
         }
 	}
     public function insert_coupon(){
@@ -26,7 +28,7 @@ class CouponController extends Controller
     public function delete_coupon($coupon_id){
     	$coupon = Coupon::find($coupon_id);
     	$coupon->delete();
-    	Session::put('message','Xóa mã giảm giá thành công');
+		Toastr::success('Xóa mã giảm giá thành công','Thành công');
         return Redirect::to('list-coupon');
     }
     public function list_coupon(){
@@ -38,7 +40,7 @@ class CouponController extends Controller
 
 		$couponExist = Coupon::where('coupon_code', '=', $data['coupon_code'])->first();
 		if ($couponExist) {
-			Session::put('message','Mã giảm giá đã tồn tại');
+			Toastr::warning('Mã giảm giá đã tồn tại','Cảnh báo');
         	return Redirect::to('insert-coupon');
 		}
     	$coupon = new Coupon;
@@ -49,8 +51,7 @@ class CouponController extends Controller
     	$coupon->coupon_time = $data['coupon_time'];
     	$coupon->coupon_condition = $data['coupon_condition'];
     	$coupon->save();
-
-    	Session::put('message','Thêm mã giảm giá thành công');
+        Toastr::success('Thêm mã giảm giá thành công','Thành công');
         return Redirect::to('insert-coupon');
 
 

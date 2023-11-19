@@ -13,6 +13,7 @@ use App\Catepost;
 use App\Coupon;
 use App\Product;
 use PDF;
+use Toastr;
 
 class OrderController extends Controller
 {
@@ -69,7 +70,7 @@ class OrderController extends Controller
 	public function print_order($checkout_code){
 		$pdf = \App::make('dompdf.wrapper');
 		$pdf->loadHTML($this->print_order_convert($checkout_code));
-		
+		Toastr::success('In thành công','Thành công');
 		return $pdf->stream();
 	}
 	public function print_order_convert($checkout_code){

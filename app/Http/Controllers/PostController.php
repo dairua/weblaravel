@@ -11,6 +11,7 @@ use App\Post;
 use App\CatePost;
 use App\Http\Requests;
 use App\Product;
+use Toastr;
 use Illuminate\Support\Facades\Redirect;
 session_start();
 
@@ -90,8 +91,8 @@ class PostController extends Controller
             $post->post_image = $new_image;
         }
         $post->save();
-        
-        return redirect()->back()->with('message','Thêm bài viết thành công');
+        Toastr::success('Thêm bài viết thành công','Thành công');
+        return redirect()->back();
     } 
     
     public function edit_post($post_id){
@@ -127,8 +128,8 @@ class PostController extends Controller
              $post->post_image = $new_image;
          }
          $post->save();
-         
-         return redirect()->back()->with('message','Cập nhật bài viết thành công');
+         Toastr::success('Cập nhật bài viết thành công','Thành công');
+         return redirect()->back();
     }
     public function delete_post($post_id){
         $this->AuthLogin();
@@ -139,7 +140,7 @@ class PostController extends Controller
         }
         $post->delete();
 
-        Session::put('message','Xóa bài viết thành công');
+        Toastr::success('Xóa bài viết thành công','Thành công');
         return redirect()->back();
     }
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Admin;
 use App\Roles;
 use Auth;
+use Toastr;
 
 class AuthController extends Controller
 {
@@ -17,7 +18,8 @@ class AuthController extends Controller
     }
     public function logout_auth(){
         Auth::logout();
-        return redirect('/logout-auth')->with('message','Đăng xuất auth thành công');
+        Toastr::success('Đăng xuất auth thành công','Thành công');
+        return redirect('/logout-auth');
     }
     public function login(Request $request){
         $this->validate($request,[
@@ -26,9 +28,11 @@ class AuthController extends Controller
         ]);
         // $data = $request->all();
         if(Auth::attempt(['admin_email'=>$request->admin_email, 'admin_password'=>$request->admin_password])){
+            Toastr::success('Đăng nhập auth thành công','Thành công');
             return redirect('/dashboard');
         }else{
-            return redirect('/login-auth')->with('message','Lỗi đăng nhập');
+            Toastr::error('Lỗi đăng nhập','Thất bại');
+            return redirect('/login-auth');
         }
     }
     public function register(Request $request){
@@ -41,7 +45,8 @@ class AuthController extends Controller
         $admin->admin_email = $data['admin_email'];
         $admin->admin_password = md5($data['admin_password']);
         $admin->save();
-        return redirect('/register-auth')->with('message','Đăng ký thành công');
+        Toastr::success('Đăng ký auth thành công','Thành công');
+        return redirect('/register-auth');
     }
     public function validation($request){
         return $this->validate($request,[
