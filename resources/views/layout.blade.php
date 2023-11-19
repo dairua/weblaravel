@@ -260,10 +260,30 @@
                           @foreach($category as $key => $cate)
                            
                             <div class="panel panel-default">
+                                @if($cate->category_parent==0)
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="{{URL::to('/danh-muc/'.$cate->slug_category_product)}}">{{$cate->category_name}}</a></h4>
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#{{$cate->slug_category_product}}">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            {{$cate->category_name}}
+                                        </a>
+                                    </h4>
                                 </div>
+
+                                <div id="{{$cate->slug_category_product}}" class="pannel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            @foreach($category as $key => $cate_sub)
+                                            @if($cate_sub->category_parent==$cate->category_id)
+                                            <li><a href="{{URL::to('/danh-muc/'.$cate_sub->slug_category_product)}}">{{$cate_sub->category_name}}</a></li>
+                                            @endif
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
+
                         @endforeach
                         </div><!--/category-products-->
                     

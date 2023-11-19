@@ -253,8 +253,8 @@ ul.sidebar-menu li a.active i {
 .brand {
     background:#0093ffe0;
     float:left;
-    width:240px;
-    height:80px;
+    width: 250px;
+    height: 120px;
     position:relative;
 }
 a.logo {

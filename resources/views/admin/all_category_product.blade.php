@@ -43,6 +43,7 @@
               </label>
             </th>
             <th>Tên danh mục</th>
+            <th>Thuộc danh mục</th>
             <th>Slug</th>
             <th>Hiển thị</th>
             
@@ -54,6 +55,17 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{ $cate_pro->category_name }}</td>
+            <td>
+              @if($cate_pro->category_parent==0)
+              <span style="color:red;">Danh mục cha</span>
+              @else
+                @foreach($category_product as $key => $cate_sub_pro)
+                  @if($cate_sub_pro->category_id==$cate_pro->category_parent)
+                  <span style="color:green";>{{$cate_sub_pro->category_name}}</span>
+                  @endif
+                @endforeach
+              @endif
+            </td>
             <td>{{ $cate_pro->slug_category_product }}</td>
             <td><span class="text-ellipsis">
               <?php
