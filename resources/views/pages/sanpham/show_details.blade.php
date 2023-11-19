@@ -3,6 +3,13 @@
 @foreach($product_details as $key => $value)
 <div class="product-details"><!--product-details-->
 <a href="{{URL::to('/')}}" style ="color:#00adc4"class="btn btn-default fa fa-heart-o" aria-hidden="true" >Trang chủ</a>
+<nav aria-label="breadcrumb">
+	<ol class="breadcrumb" style="background:none">
+        <li class="breadcrumb-item"><a href="{{url('/')}}">Trang chủ</a></li>
+		<li class="breadcrumb-item"><a href="{{url('/danh-muc/'.$cate_slug)}}">{{$product_cate}}</a></li>
+		<li class="breadcrumb-item active" aria-current="page">{{$meta_title}}</li>
+    </ol>
+</nav>
 						<div class="col-sm-5">
 							<div class="view-product">
 								<img src="{{URL::to('/public/uploads/product/'.$value->product_image)}}" alt="" />

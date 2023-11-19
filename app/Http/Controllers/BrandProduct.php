@@ -121,6 +121,8 @@ class BrandProduct extends Controller
         $brand_name = DB::table('tbl_brand')->where('tbl_brand.brand_slug',$brand_slug)->limit(1)->get();
 
         foreach($brand_name as $key => $val){
+            // $product_brand=$val->brand_name;
+            // $brand_slug=$val->brand_slug;
             //seo 
             $meta_desc = $val->brand_desc; 
             $meta_keywords = $val->brand_desc;
@@ -129,6 +131,7 @@ class BrandProduct extends Controller
             //--seo
         }
          
-        return view('pages.brand.show_brand')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('brand_by_id',$brand_by_id)->with('brand_name',$brand_name)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider);
+        return view('pages.brand.show_brand')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('brand_by_id',$brand_by_id)->with('brand_name',$brand_name)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)
+        ;
     }
 }
