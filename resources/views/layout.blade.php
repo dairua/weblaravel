@@ -125,8 +125,11 @@
                                  }
                                 ?>
                                 
-
-                                <li><a href="{{URL::to('/gio-hang')}}"><i class="fa fa-shopping-cart"></i> Giỏ hàng</a></li>
+                                <li class="cart-hover"><a href="{{url('gio-hang')}}"><i class="fa fa-shopping-cart"></i> 
+                                    Giỏ hàng
+                                <span class="show-cart"></span>
+                                
+                                </a></li>              
                                 <?php
                                    $customer_id = Session::get('customer_id');
                                    if($customer_id!=NULL){ 
@@ -165,8 +168,17 @@
                                 <li><a href="{{URL::to('/trang-chu')}}" class="active">Trang chủ</a></li>
                                 <li class="dropdown"><a href="#">Sản phẩm<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        @foreach($category as $key => $danhmuc)
-                                        <li><a href="{{URL::to('/danh-muc/'.$danhmuc->slug_category_product)}}">{{$danhmuc->category_name}}</a></li>
+                                        @foreach($category as $key => $cate)
+                                           @if($cate->category_parent==0)
+                                           <li><a href="{{URL::to('/danh-muc/'.$cate->slug_category_product)}}">{{$cate->category_name}}</a></li>
+                                           @foreach($category as $key => $cate_sub)
+                                               @if($cate_sub->category_parent==$cate->category_id)
+                                                  <ul class="cate_sub">
+                                                    <li><a href="{{URL::to('/danh-muc/'.$cate_sub->slug_category_product)}}">{{$cate_sub->category_name}}</a></li>
+                                                  </ul>
+                                               @endif
+                                           @endforeach
+                                           @endif
                                         @endforeach
                                     </ul>
                                 </li> 
@@ -177,7 +189,7 @@
                                         @endforeach
                                     </ul>
                                 </li> 
-                                <li><a href="{{URL::to('/gio-hang')}}">Giỏ hàng</a></li>
+                                <li><a href="{{URL::to('/gio-hang')}}">Giỏ hàng<span class="show-cart"></span></a></li>
                                 <li><a href="{{URL::to('/lien-he')}}">Liên hệ</a></li>
                             </ul>
                         </div>
@@ -197,58 +209,8 @@
         </div><!--/header-bottom-->
     </header><!--/header-->
     
-    <section id="slider"><!--slider-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div id="slider-carousel" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#slider-carousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#slider-carousel" data-slide-to="1"></li>
-                            <li data-target="#slider-carousel" data-slide-to="2"></li>
-                            <li data-target="#slider-carousel" data-slide-to="3"></li>
-                            <li data-target="#slider-carousel" data-slide-to="4"></li>
-                        </ol>
-                        <style type="text/css">
-                            img.img.img-responsive.img-slider {
-                                height: 400px;
-                            }
-                        </style>
-
-
-
-                        <div class="carousel-inner">
-                        @php 
-                            $i = 0;
-                        @endphp
-                        @foreach($slider as $key => $slide)
-                            @php 
-                                $i++;
-                            @endphp
-                            <div class="item {{$i==1 ? 'active' : '' }}">
-                                
-                                <div class="col-sm-12">
-                                    <img alt="{{$slide->slider_desc}}" src="{{asset('public/uploads/slider/'.$slide->slider_image)}}" height="200" width="100%" class="img img-responsive img-slider">
-                                   
-                                </div>
-                            </div>
-                        @endforeach    
-                        </div>
-                        
-                        <a href="#slider-carousel" class="left control-carousel hidden-xs" data-slide="prev">
-                            <i class="fa fa-angle-left"></i>
-                        </a>
-
-                        
-                        <a href="#slider-carousel" class="right control-carousel hidden-xs" data-slide="next">
-                            <i class="fa fa-angle-right"></i>
-                        </a>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </section><!--/slider-->
+    <!---slider--->
+    @yield('slider')
     
     <section>
         <div class="container">
@@ -578,6 +540,20 @@ $.ajaxSetup({
     </script>
     <script type="text/javascript">
         $(document).ready(function(){
+    
+            //show cart
+            show_cart();
+            function show_cart(){
+                $.ajax({
+                    url:'{{url('/show-cart')}}',
+                    method:"GET",
+
+                    success:function(data){
+                        $('.show-cart').html(data);
+                    }
+                });
+            }
+
             $('.add-to-cart').click(function(){
 
                 var id = $(this).data('id_product');
@@ -611,7 +587,8 @@ $.ajaxSetup({
                                 function() {
                                     window.location.href = "{{url('/gio-hang')}}";
                                 });
-
+                                show_cart();
+                                hover_cart();
                         }
 
                     });

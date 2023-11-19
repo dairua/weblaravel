@@ -37,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--logo start-->
 <div class="brand">
     <a target="_blank" href="{{url('/')}}" class="logo">
-        Handmade Shop
+        Shop
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>

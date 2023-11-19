@@ -146,6 +146,7 @@ Route::get('/gio-hang','CartController@gio_hang');
 Route::get('/delete-to-cart/{rowId}','CartController@delete_to_cart');
 Route::get('/del-product/{session_id}','CartController@delete_product');
 Route::get('/del-all-product','CartController@delete_all_product');
+Route::get('/show-cart','CartController@show_cart_menu');
 
 //Checkout
 Route::get('/dang-nhap','CheckoutController@login_checkout');

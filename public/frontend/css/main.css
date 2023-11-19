@@ -200,7 +200,7 @@ a#scrollUp i{
 
 
 .shop-menu ul li a {
-  background: #FFFFFF;
+  /* background: #FFFFFF; */
   color: #696763;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
@@ -2529,5 +2529,27 @@ h2.title {
 .contact-info .social-networks ul li a:hover{
   color: #00adc4 !important;
 }
+
+span.badges{
+  /* background: red;
+  padding: 2px;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff; */
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 0;
+  line-height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  background: #e32124;
+  position: absolute;
+  font-size: 11px;
+  top: 0px;
+  color: #fff;
+}
+
 
 

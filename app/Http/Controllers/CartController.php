@@ -14,6 +14,12 @@ use App\Coupon;
 session_start();
 class CartController extends Controller
 {
+    public function show_cart_menu(){
+        $cart= count(Session::get('cart'));
+        $output = '';
+        $output .='<span class="badges">'.$cart.'<span>'; 
+        echo $output;
+    }
     public function check_coupon(Request $request){
         $data = $request->all();
         $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
