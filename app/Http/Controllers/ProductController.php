@@ -175,6 +175,7 @@ class ProductController extends Controller
 
         foreach($details_product as $key => $value){
             $category_id = $value->category_id;
+            $product_id = $value->product_id;
             $product_cate=$value->category_name;
             $cate_slug=$value->slug_category_product;
                 //seo 
@@ -184,6 +185,10 @@ class ProductController extends Controller
                 $url_canonical = $request->url();
                 //--seo
             }
+
+            $product=Product::where('product_id',$product_id)->first();
+            $product->product_views=$product->product_views + 1;
+            $product->save();
        
         $related_product = DB::table('tbl_product')
         ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')

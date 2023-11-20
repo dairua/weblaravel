@@ -159,6 +159,8 @@ class CheckoutController extends Controller
     }
     public function add_customer(Request $request){
 
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
+
     	$data = array();
     	$data['customer_name'] = $request->customer_name;
     	$data['customer_phone'] = $request->customer_phone;
@@ -169,11 +171,12 @@ class CheckoutController extends Controller
 
     	Session::put('customer_id',$customer_id);
     	Session::put('customer_name',$request->customer_name);
-    	return Redirect::to('/checkout');
+    	return Redirect::to('/checkout')->with('category_post', $category_post);
 
 
     }
     public function checkout(Request $request){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
          //seo 
          //slide
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
@@ -188,9 +191,10 @@ class CheckoutController extends Controller
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
         $city = City::orderby('matp','ASC')->get();
 
-    	return view('pages.checkout.show_checkout')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('city',$city)->with('slider',$slider);
+    	return view('pages.checkout.show_checkout')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('city',$city)->with('slider',$slider);
     }
     public function save_checkout_customer(Request $request){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
     	$data = array();
     	$data['shipping_name'] = $request->shipping_name;
     	$data['shipping_phone'] = $request->shipping_phone;
@@ -202,9 +206,10 @@ class CheckoutController extends Controller
 
     	Session::put('shipping_id',$shipping_id);
     	
-    	return Redirect::to('/payment');
+    	return Redirect::to('/payment')->with('category_post', $category_post);
     }
     public function payment(Request $request){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
         //seo 
         $meta_desc = "Đăng nhập thanh toán"; 
         $meta_keywords = "Đăng nhập thanh toán";
@@ -213,10 +218,11 @@ class CheckoutController extends Controller
         //--seo 
         $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
-        return view('pages.checkout.payment')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
+        return view('pages.checkout.payment')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
 
     }
     public function order_place(Request $request){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
         //insert payment_method
         //seo 
         $meta_desc = "Đăng nhập thanh toán"; 
@@ -257,7 +263,7 @@ class CheckoutController extends Controller
 
             $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get();
             $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
-            return view('pages.checkout.handcash')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
+            return view('pages.checkout.handcash')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical);
 
         }else{
             echo 'Thẻ ghi nợ';

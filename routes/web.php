@@ -35,8 +35,12 @@ Route::get('/bai-viet/{post_slug}','PostController@bai_viet');
 //Backend
 Route::get('/admin','AdminController@index');
 Route::get('/dashboard','AdminController@show_dashboard');
+Route::get('/order-date','AdminController@order_date');
+Route::post('/filter-by-date','AdminController@filter_by_date');
+Route::post('/days-order','AdminController@days_order');
 Route::get('/logout','AdminController@logout');
 Route::post('/admin-dashboard','AdminController@dashboard');
+Route::post('/dashboard-filter','AdminController@dashboard_filter');
 
 
 //Category Product

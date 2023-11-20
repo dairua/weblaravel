@@ -193,9 +193,14 @@ class PostController extends Controller
          $meta_keywords = $p->post_meta_keywords;
          $meta_title = $p->post_title;
          $cate_id = $p->cate_post_id;
+         $post_id = $p->post_id;
          $url_canonical = $request->url();
          //--seo
          }
+
+        $post=Post::where('post_id',$post_id)->first();
+        $post->post_views=$post->post_views + 1;
+        $post->save();
  
          return view('pages.baiviet.baiviet')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)
          ->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)

@@ -21,14 +21,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="{{asset('public/backend/css/font-awesome.css')}}" rel="stylesheet"> 
 <link rel="stylesheet" href="{{asset('public/backend/css/morris.css')}}" type="text/css"/>
 <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+<!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> -->
 
 <!-- calendar -->
 <link rel="stylesheet" href="{{asset('public/backend/css/monthly.css')}}">
+<link rel="stylesheet" href="{{asset('public/backend/css/jquery-ui.css')}}">
 <!-- //calendar -->
 <!-- //font-awesome icons -->
 <script src="{{asset('public/backend/js/jquery2.0.3.min.js')}}"></script>
+<!-- <script src="{{asset('public/backend/js/raphael-min.js')}}"></script>
+<script src="{{asset('public/backend/js/morris.js')}}"></script> -->
 <script src="{{asset('public/backend/js/raphael-min.js')}}"></script>
-<script src="{{asset('public/backend/js/morris.js')}}"></script>
+<script src="{{asset('public/backend/js/morris.min.js')}}"></script>
 
 </head>
 <body>
@@ -256,7 +260,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/backend/ckeditor/ckeditor.js')}}"></script>
 <script src="{{asset('public/backend/js/jquery.form-validator.min.js')}}"></script>
 <script src="{{asset('public/backend/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('public/backend/js/jquery-ui.js')}}"></script>
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
 {!! Toastr::message() !!}
 @stack('js')
 
@@ -293,10 +299,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 //In slug ra textbox có id “slug”
             document.getElementById('convert_slug').value = slug;
         }
-         
-
-   
-   
+          
 </script>
 <script type="text/javascript">
     $('.update_quantity_order').click(function(){
@@ -318,11 +321,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
                     alert('Cập nhật số lượng thành công');
                  
-                   location.reload();
+                    location.reload();
                     
-              
-                    
-
                 }
         });
 
@@ -475,6 +475,108 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         CKEDITOR.replace('ckeditor2');
         CKEDITOR.replace('ckeditor3');
         CKEDITOR.replace('id4');
+</script>
+
+<script type="text/javascript">
+    $(document).ready( function(){
+        var donut = Morris.Donut({
+            element:'donut',
+            resize:true,
+            colors:[
+                '#ce616a','#61a1ce','#f5b942','#4842f5'
+            ],
+            data:[
+                {label:"Products",value:<?php echo $product?>},
+                {label:"Posts",value:<?php echo $post?>},
+                {label:"Orders",value:<?php echo $order?>},
+                {label:"Customers",value:<?php echo $customer?>},
+            ]
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready( function () {
+
+    chart30daysorder();
+    function chart30daysorder(){
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            url:"{{url('/days-order')}}",
+            method:"POST",
+            dataType:"JSON",
+            data:{_token:_token},
+
+            success:function(data){
+                chart.setData(data);
+            }
+        });
+    }
+
+    $('.dashboard-filter').change(function(){
+        var dashboard_value = $(this).val();
+        var _token = $('input[name="_token"]').val();
+        $.ajax({
+            url:"{{url('/dashboard-filter')}}",
+            method:"POST",
+            dataType:"JSON",
+            data:{dashboard_value:dashboard_value,_token:_token},
+
+            success:function(data){
+                chart.setData(data);
+            }
+        });
+    });
+
+    var chart = new Morris.Bar({
+        element:'myfirstchart',
+        lineColors:['#819c79','#fc8710','#ff6541','#a4add3','#766b56'],
+        // pointFillColors:['#ffffff'],
+        // pointStrokeColors:['black'],
+        // fillOpacity: 0.6,
+        hideHover: 'auto',
+        parseTime: false,
+        xkey:'period',
+        ykeys:['order','sales','profit','quantity'],
+        // behaveLikeLine:true,
+        labels:['đơn hàng','doanh số','lợi nhuận','số lượng']
+    });
+
+    $('#btn-dashboard-filter').click(function(){
+        var _token = $('input[name="_token"]');
+        var form_date =$('#datepicker').val();
+        var to_date =$('#datepicker2').val();
+
+        $.ajax({
+            url:"{{url('/filter-by-date')}}",
+            method:"POST",
+            dataType:"JSON",
+            data:{form_date:form_date,to_date:to_date,_token:_token},
+
+            success:function(data){
+                chart.setData(data);
+            }
+        });
+    });
+    });
+</script>
+<script type="text/javascript">
+    $(function(){
+        $("#datepicker").datepicker({
+            prevText:"Tháng trước",
+            nextText:"Tháng sau",
+            dateFormat:"yy-mm-dd",
+            dayNamesMin:["T2","T3","T4","T5","T6","T7","CN"],
+            duration:"slow"
+        });
+        $("#datepicker2").datepicker({
+            prevText:"Tháng trước",
+            nextText:"Tháng sau",
+            dateFormat:"yy-mm-dd",
+            dayNamesMin:["T2","T3","T4","T5","T6","T7","CN"],
+            duration:"slow"
+        });
+    });
 </script>
 
 <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot-chart/excanvas.min.js"></script><![endif]-->
