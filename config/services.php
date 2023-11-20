@@ -34,4 +34,10 @@ return [
         'secret' => env('SPARKPOST_SECRET'),
     ],
 
+    'google'=>[
+        'client_id' => '436975245597-pqjjspm5bt8tovkof8qk89ml6887lc5s.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => 'http://localhost/Laravel/Mylaravel/google/callback',
+    ],
+
 ];

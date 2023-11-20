@@ -57,8 +57,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                 <img alt="" src="{{('public/backend/images/dai.png')}}">
                 <span class="username">
-                	<?php
-					$name = Auth::user()->admin_name;
+
+                    <?php
+                    if(Session::get('login_normal')){
+                        $name = Session::get('admin_name');
+                    }else{
+                        $name = Auth::user()->admin_name;
+                    }
+					
 					if($name){
 						echo $name;
 					}

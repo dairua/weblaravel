@@ -271,6 +271,8 @@ class CheckoutController extends Controller
     	return Redirect::to('/dang-nhap');
     }
     public function login_customer(Request $request){
+        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
+
     	$email = $request->email_account;
     	$password = md5($request->password_account);
     	$result = DB::table('tbl_customers')->where('customer_email',$email)->where('customer_password',$password)->first();
@@ -284,6 +286,7 @@ class CheckoutController extends Controller
     		return Redirect::to('/dang-nhap');
     	}
         Session::save();
+        return view('pages.checkout.login_checkout')->with('category_post', $category_post);
 
     }
     public function manage_order(){

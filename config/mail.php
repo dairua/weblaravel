@@ -19,7 +19,8 @@ return [
     'driver' => env('MAIL_DRIVER', 'smtp'),
 
     'stream' =>[
-        'ssl'=>['allow_seft_signed'=> true,
+        'ssl'=>[
+        'allow_seft_signed'=> true,
         'verify_peer' => false,
         'verify_peer_name' => false,
     ],
@@ -49,7 +50,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 465),
 
     /*
     |--------------------------------------------------------------------------
@@ -64,7 +65,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'pdai20032k1@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Đại Turtle'),
+        'name' => env('MAIL_FROM_NAME', 'Phạm Đại'),
     ],
 
     /*
@@ -78,7 +79,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
     /*
     |--------------------------------------------------------------------------

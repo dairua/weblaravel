@@ -13,7 +13,12 @@ use Toastr;
 class SliderController extends Controller
 {
 	public function AuthLogin(){
-        $admin_id = Session::get('admin_id');
+        // $admin_id = Auth::id();
+        if(Session::get('login_normal')){
+        $admin_id=Session::get('admin_id');
+        }else{
+            $admin_id = Auth::id();
+        }
         if($admin_id){
             return Redirect::to('dashboard');
         }else{

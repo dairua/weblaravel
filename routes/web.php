@@ -53,6 +53,7 @@ Route::get('/active-category-product/{category_product_id}','CategoryProduct@act
 
 //Send Mail 
 Route::get('/send-mail','HomeController@send_mail');
+Route::get('/quen-mat-khau','HomeController@quen_mat_khau');
 
 //Login facebook
 Route::get('/login-facebook','AdminController@login_facebook');

@@ -25,9 +25,17 @@ class AdminController extends Controller
             // return $users->name;
             // return $users->email;
             $authUser = $this->findOrCreateUser($users,'google');
+            if($authUser){
             $account_name = Login::where('admin_id',$authUser->user)->first();
             Session::put('admin_name',$account_name->admin_name);
+            Session::put('login_normal',true);
             Session::put('admin_id',$account_name->admin_id);
+            }elseif($customer_new){
+                $account_name = Login::where('admin_id',$authUser->user)->first();
+                Session::put('admin_name',$account_name->admin_name);
+                Session::put('login_normal',true);
+                Session::put('admin_id',$account_name->admin_id);
+            }
             Toastr::success('Đăng nhập Admin thành công','Thành công');
             return redirect('/dashboard');  
     }
@@ -36,9 +44,8 @@ class AdminController extends Controller
             if($authUser){
 
                 return $authUser;
-            }
-          
-            $hieu = new Social([
+            }else{
+            $customer_new = new Social([
                 'provider_user_id' => $users->id,
                 'provider' => strtoupper($provider)
             ]);
@@ -56,16 +63,17 @@ class AdminController extends Controller
                     ]);
                 }
 
-            $hieu->login()->associate($orang);
+            $customer_new->login()->associate($orang);
                 
-            $hieu->save();
+            $customer_new->save();
+            return $customer_new;
 
-            $account_name = Login::where('admin_id',$hieu->user)->first();
-            Session::put('admin_name',$account_name->admin_name);
-            Session::put('admin_id',$account_name->admin_id); 
-            Toastr::success('Đăng nhập Admin thành công','Thành công');
-            return redirect('/dashboard');
-
+            // $account_name = Login::where('admin_id',$hieu->user)->first();
+            // Session::put('admin_name',$account_name->admin_name);
+            // Session::put('admin_id',$account_name->admin_id); 
+            // Toastr::success('Đăng nhập Admin thành công','Thành công');
+            // return redirect('/dashboard');
+            }
 
     }
 
@@ -114,7 +122,12 @@ class AdminController extends Controller
     }
 
     public function AuthLogin(){
-        $admin_id = Auth::id();
+        // $admin_id = Auth::id();
+        if(Session::get('login_normal')){
+        $admin_id=Session::get('admin_id');
+        }else{
+            $admin_id = Auth::id();
+        }
         if($admin_id){
             return Redirect::to('dashboard');
         }else{
