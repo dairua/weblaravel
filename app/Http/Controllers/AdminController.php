@@ -141,16 +141,16 @@ class AdminController extends Controller
     public function show_dashboard(){
         $this->AuthLogin();
         //dashboard-backend
-        $product = Product::all()->count();
-        $post = Post::all()->count();
-        $order = Order::all()->count();
-        $customer = Customer::all()->count();
+        $app_product = Product::all()->count();
+        $app_post = Post::all()->count();
+        $app_order = Order::all()->count();
+        $app_customer = Customer::all()->count();
         
         $product_views = Product::orderBy('product_views','DESC')->take(20)->get();
         
         $post_views=Post::orderBy('post_views','DESC')->take(5)->get();
         
-    	return view('admin.dashboard')->with(compact('product','post','order','customer','product_views','post_views'));
+    	return view('admin.dashboard')->with(compact('app_product','app_post','app_order','app_customer','product_views','post_views'));
     }
 
     public function dashboard_filter(Request $request){

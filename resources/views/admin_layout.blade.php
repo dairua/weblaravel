@@ -261,11 +261,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/backend/js/jquery.form-validator.min.js')}}"></script>
 <script src="{{asset('public/backend/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('public/backend/js/jquery-ui.js')}}"></script>
+<script src="{{asset('public/backend/js/simple.money.format.js')}}"></script>
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+
+
+
+$('.money').simpleMoneyFormat();
 
 {!! Toastr::message() !!}
 @stack('js')
-
+<script type="text/javascript">
+    $('.price_format').simpleMoneyFormat();
+</script>
 <script type="text/javascript">
  
     function ChangeToSlug()
@@ -486,10 +493,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 '#ce616a','#61a1ce','#f5b942','#4842f5'
             ],
             data:[
-                {label:"Products",value:<?php echo $product?>},
-                {label:"Posts",value:<?php echo $post?>},
-                {label:"Orders",value:<?php echo $order?>},
-                {label:"Customers",value:<?php echo $customer?>},
+                {label:"Products",value:<?php echo $app_product?>},
+                {label:"Posts",value:<?php echo $app_post?>},
+                {label:"Orders",value:<?php echo $app_order?>},
+                {label:"Customers",value:<?php echo $app_customer?>},
             ]
         });
     });

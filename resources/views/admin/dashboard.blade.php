@@ -13,14 +13,6 @@
         <p class="title_thongke">Thống kê đơn hàng doanh số</p>
         <form autocomplete="off">
             @csrf
-            <div class="col-md-2">
-                <p>Từ ngày: <input type="text" id="datepicker" class="form-control">
-                <input type="button" id="btn-dashboard-filter" class="btn btn-primary btn-sm" value="Lọc Kết Quả"></p>
-            </div>
-
-            <div class="col-md-2">
-                <p>Đến ngày: <input type="text" id="datepicker2" class="form-control"></p>
-            </div>
 
             <div class="col-md-2">
                 <p>
@@ -34,6 +26,16 @@
                     </select>
                 </p>
             </div>
+
+            <div class="col-md-2">
+                <p>Từ ngày: <input type="text" id="datepicker" class="form-control">
+                <input type="button" id="btn-dashboard-filter" class="btn btn-primary btn-sm" value="Lọc Kết Quả"></p>
+            </div>
+
+            <div class="col-md-2">
+                <p>Đến ngày: <input type="text" id="datepicker2" class="form-control"></p>
+            </div>
+
         </form>
 
             <div class="col-md-12">
@@ -58,7 +60,7 @@
                     font-weight: 400;
                 }
             </style>
-            <h3>Bài viết được xem</h3>
+            <h3>Sản phẩm được xem</h3>
             <ol class="list_views">
                 @foreach($product_views as $key => $pro )
                 <li>

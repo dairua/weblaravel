@@ -45,7 +45,7 @@
             <td>@if($ord->order_status==1)
                     Đơn hàng mới
                 @else 
-                    Đã xử lý
+                    Đã xử lý - Đang giao hàng
                 @endif
             </td>
            
@@ -53,8 +53,8 @@
             <td>
               <a href="{{URL::to('/view-order/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-eye text-success text-active"></i></a>
-
-              <div style='cursor:pointer' data-id="{{$ord->order_code}}" class="active styling-edit" ui-toggle-class="" id="delete">
+              <a onclick="return confirm('Bạn có chắc là muốn xóa đơn đặt hàng này không?')" href="{{URL::to('/delete-order/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class=""></a>
+              <!-- <div style='cursor:pointer' data-id="{{$ord->order_code}}" class="active styling-edit" ui-toggle-class="" id="delete"> -->
                 <i class="fa fa-times text-danger text"></i>
               </div>
 

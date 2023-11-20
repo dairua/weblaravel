@@ -30,9 +30,13 @@
                                     <label for="exampleInputEmail1">Slug</label>
                                     <input type="text" name="product_slug" class="form-control " id="convert_slug" placeholder="Tên danh mục">
                                 </div>
-                                     <div class="form-group">
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Giá sản phẩm</label>
-                                    <input type="text" data-validation="number" data-validation-error-msg="Làm ơn điền số tiền" name="product_price" class="form-control" id="" placeholder="Tên danh mục">
+                                    <input type="text" data-validation="length" data-validation-error-msg="Làm ơn điền số tiền" name="product_price" class="form-control price_format" id="" placeholder="Tên danh mục">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Giá gốc</label>
+                                    <input type="text" data-validation="length" data-validation-error-msg="Làm ơn điền số tiền" name="price_cost" class="form-control price_format" id="" placeholder="Tên danh mục">
                                 </div>
                                   <div class="form-group">
                                     <label for="exampleInputEmail1">Hình ảnh sản phẩm</label>

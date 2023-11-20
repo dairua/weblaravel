@@ -45,7 +45,8 @@
             <th>Tên sản phẩm</th>
             <th>Số lượng</th>
             <th>Slug</th>
-            <th>Giá</th>
+            <th>Giá bán</th>
+            <th>Giá gốc</th>
             <th>Hình sản phẩm</th>
             <th>Danh mục</th>
             <th>Thương hiệu</th>
@@ -63,6 +64,7 @@
             <td>{{ $pro->product_quantity }}</td>
             <td>{{ $pro->product_slug }}</td>
             <td>{{ number_format($pro->product_price,0,',','.') }}đ</td>
+            <td>{{ number_format($pro->price_cost,0,',','.') }}đ</td>
             <td><img src="public/uploads/product/{{ $pro->product_image }}" height="100" width="100"></td>
             <td>{{ $pro->category_name }}</td>
             <td>{{ $pro->brand_name }}</td>

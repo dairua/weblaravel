@@ -52,10 +52,13 @@ class ProductController extends Controller
     public function save_product(Request $request){
         $this->AuthLogin();
     	$data = array();
+        $product_price=filter_var($request->product_price, FILTER_SANITIZE_NUMBER_INT);
+        $price_cost=filter_var($request->product_price, FILTER_SANITIZE_NUMBER_INT);
     	$data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
         $data['product_slug'] = $request->product_slug;
-    	$data['product_price'] = $request->product_price;
+    	$data['product_price'] = $product_price;
+        $data['price_cost'] = $price_cost;
     	$data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
         $data['category_id'] = $request->product_cate;
@@ -125,10 +128,13 @@ class ProductController extends Controller
     public function update_product(Request $request,$product_id){
          $this->AuthLogin();
         $data = array();
+        $product_price=filter_var($request->product_price, FILTER_SANITIZE_NUMBER_INT);
+        $price_cost=filter_var($request->product_price, FILTER_SANITIZE_NUMBER_INT);
         $data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
         $data['product_slug'] = $request->product_slug;
-        $data['product_price'] = $request->product_price;
+        $data['product_price'] = $product_price;
+        $data['price_cost'] = $price_cost;
         $data['product_desc'] = $request->product_desc;
         $data['product_content'] = $request->product_content;
         $data['category_id'] = $request->product_cate;

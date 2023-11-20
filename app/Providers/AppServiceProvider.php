@@ -27,12 +27,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('*',function($view){
-            $product = Product::all()->count();
-            $post = Post::all()->count();
-            $order = Order::all()->count();
-            $customer = Customer::all()->count();
+            $app_product = Product::all()->count();
+            $app_post = Post::all()->count();
+            $app_order = Order::all()->count();
+            $app_customer = Customer::all()->count();
 
-            $view->with('product',$product)->with('post',$post)->with('order',$order)->with('customer',$customer);
+            $view->with('app_product',$app_product)->with('app_post',$app_post)->with('app_order',$app_order)->with('app_customer',$app_customer);
         });
     }
 }
