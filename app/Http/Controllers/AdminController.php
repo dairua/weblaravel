@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Session;
 use App\Social;
+use App\SocialCustomers;
 use Socialite;
 use App\Login;
 use Auth;
@@ -27,9 +28,6 @@ class AdminController extends Controller
     }
     public function callback_google(){
             $users = Socialite::driver('google')->stateless()->user(); 
-            // // return $users->id;
-            // return $users->name;
-            // return $users->email;
             $authUser = $this->findOrCreateUser($users,'google');
             if($authUser){
             $account_name = Login::where('admin_id',$authUser->user)->first();
@@ -46,13 +44,14 @@ class AdminController extends Controller
             return redirect('/dashboard');  
     }
     public function findOrCreateUser($users, $provider){
-            $authUser = Social::where('provider_user_id', $users->id)->first();
+            $authUser = Social::where('provider_user_id', $users->id)->where('provider_user_email', $users->email)->first();
             if($authUser){
 
                 return $authUser;
             }else{
             $customer_new = new Social([
                 'provider_user_id' => $users->id,
+                'provider_user_email' => $users->email,
                 'provider' => strtoupper($provider)
             ]);
 
@@ -75,52 +74,107 @@ class AdminController extends Controller
             return $customer_new;
 
             }
-
     }
 
-
-    public function login_facebook(){
-        return Socialite::driver('facebook')->redirect();
+    public function login_customer_google(){
+        config(['services.google.redirect'=> env('GOOGLE_CLIENT_URL')]);
+        return Socialite::driver('google')->redirect();
     }
+    public function callback_customer_google(){
+            config(['services.google.redirect'=> env('GOOGLE_CLIENT_URL')]);
 
-    public function callback_facebook(){
-        $provider = Socialite::driver('facebook')->user();
-        $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->first();
-        if($account){
-            //login in vao trang quan tri  
-            $account_name = Login::where('admin_id',$account->user)->first();
-            Session::put('admin_name',$account_name->admin_name);
-            Session::put('admin_id',$account_name->admin_id);
-            Toastr::success('Đăng nhập Admin thành công','Thành công');
-            return redirect('/dashboard');
+            $users = Socialite::driver('google')->stateless()->user(); 
+            $authUser = $this->findOrCreateCustomer($users,'google');
+            if($authUser){
+            $account_name = Customer::where('customer_id',$authUser->user)->first();
+            Session::put('customer_name',$account_name->customer_name);
+            Session::put('customer_picture',$account_name->customer_picture);
+            Session::put('customer_id',$account_name->customer_id);
+            }elseif($customer_new){
+                $account_name = Customer::where('customer_id',$authUser->user)->first();
+                Session::put('customer_name',$account_name->customer_name);
+                Session::put('customer_picture',$account_name->customer_picture);
+                Session::put('customer_id',$account_name->customer_id);
+            }
+            Toastr::success('Đăng nhập tài khoản google <span>'.$account_name->customer_email.'</span> thành công','Thành công');
+            return redirect('/trang-chu');  
+    }
+    public function findOrCreateCustomer($users, $provider){
+        $authUser = SocialCustomers::where('provider_user_id', $users->id)->where('provider_user_email', $users->email)->first();
+        if($authUser){
+            return $authUser;
         }else{
+        $customer_new = new SocialCustomers([
+            'provider_user_id' => $users->id,
+            'provider_user_email' => $users->email,
+            'provider' => strtoupper($provider)
+        ]);
 
-            $hieu = new Social([
-                'provider_user_id' => $provider->getId(),
-                'provider' => 'facebook'
-            ]);
+        $customer = Customer::where('customer_email',$users->email)->first();
 
-            $orang = Login::where('admin_email',$provider->getEmail())->first();
-
-            if(!$orang){
-                $orang = Login::create([
-                    'admin_name' => $provider->getName(),
-                    'admin_email' => $provider->getEmail(),
-                    'admin_password' => '',
-                    'admin_phone' => ''
+            if(!$customer){
+                $customer = Customer::create([
+                    'customer_name' => $users->name,
+                    'customer_email' => $users->email,
+                    'customer_password' => '',
+                    'customer_phone' => '',
+                    'customer_picture' =>$users->avatar
                     
                 ]);
             }
-            $hieu->login()->associate($orang);
-            $hieu->save();
 
-            $account_name = Login::where('admin_id',$account->user)->first();
-            Session::put('admin_name',$account_name->admin_name);
-            Session::put('admin_id',$account_name->admin_id);
-            Toastr::success('Đăng nhập Admin thành công','Thành công');
-            return redirect('/dashboard');
-        } 
-    }
+        $customer_new->customer()->associate($customer);
+            
+        $customer_new->save();
+
+        return $customer_new;
+
+        }
+}
+
+
+    // public function login_facebook(){
+    //     return Socialite::driver('facebook')->redirect();
+    // }
+
+    // public function callback_facebook(){
+    //     $provider = Socialite::driver('facebook')->user();
+    //     $account = Social::where('provider','facebook')->where('provider_user_id',$provider->getId())->first();
+    //     if($account){
+    //         //login in vao trang quan tri  
+    //         $account_name = Login::where('admin_id',$account->user)->first();
+    //         Session::put('admin_name',$account_name->admin_name);
+    //         Session::put('admin_id',$account_name->admin_id);
+    //         Toastr::success('Đăng nhập Admin thành công','Thành công');
+    //         return redirect('/dashboard');
+    //     }else{
+
+    //         $hieu = new Social([
+    //             'provider_user_id' => $provider->getId(),
+    //             'provider' => 'facebook'
+    //         ]);
+
+    //         $orang = Login::where('admin_email',$provider->getEmail())->first();
+
+    //         if(!$orang){
+    //             $orang = Login::create([
+    //                 'admin_name' => $provider->getName(),
+    //                 'admin_email' => $provider->getEmail(),
+    //                 'admin_password' => '',
+    //                 'admin_phone' => ''
+                    
+    //             ]);
+    //         }
+    //         $hieu->login()->associate($orang);
+    //         $hieu->save();
+
+    //         $account_name = Login::where('admin_id',$account->user)->first();
+    //         Session::put('admin_name',$account_name->admin_name);
+    //         Session::put('admin_id',$account_name->admin_id);
+    //         Toastr::success('Đăng nhập Admin thành công','Thành công');
+    //         return redirect('/dashboard');
+    //     } 
+    // }
 
     public function AuthLogin(){
         if(Session::get('login_normal')){

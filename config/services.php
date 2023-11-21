@@ -35,9 +35,9 @@ return [
     ],
 
     'google'=>[
-        'client_id' => '436975245597-pqjjspm5bt8tovkof8qk89ml6887lc5s.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'http://localhost/Laravel/Mylaravel/google/callback',
+        'client_id' => env('GOOGLE_ID'),
+        'client_secret' => env('GOOGLE_SECRET'),
+        'redirect' => env('GOOGLE_URL'),
     ],
 
 ];

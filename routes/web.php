@@ -55,20 +55,24 @@ Route::post('/import-csv','CategoryProduct@import_csv');
 Route::get('/unactive-category-product/{category_product_id}','CategoryProduct@unactive_category_product');
 Route::get('/active-category-product/{category_product_id}','CategoryProduct@active_category_product');
 
+Route::post('/save-category-product','CategoryProduct@save_category_product');
+Route::post('/update-category-product/{category_product_id}','CategoryProduct@update_category_product');
 //Send Mail 
 Route::get('/send-mail','HomeController@send_mail');
 Route::get('/quen-mat-khau','HomeController@quen_mat_khau');
 
-//Login facebook
-Route::get('/login-facebook','AdminController@login_facebook');
-Route::get('/admin/callback','AdminController@callback_facebook');
+// //Login facebook
+// Route::get('/login-facebook','AdminController@login_facebook');
+// Route::get('/admin/callback','AdminController@callback_facebook');
 
 //Login google
 Route::get('/login-google','AdminController@login_google');
 Route::get('/google/callback','AdminController@callback_google');
 
-Route::post('/save-category-product','CategoryProduct@save_category_product');
-Route::post('/update-category-product/{category_product_id}','CategoryProduct@update_category_product');
+//Login customer google
+Route::get('/login-customer-google','AdminController@login_customer_google');
+Route::get('/customer/google/callback','AdminController@callback_customer_google');
+
 
 //Brand Product
 Route::get('/add-brand-product','BrandProduct@add_brand_product');

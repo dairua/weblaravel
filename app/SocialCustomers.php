@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Social extends Model
+class SocialCustomers extends Model
 {
     public $timestamps = false;
     protected $fillable = [
@@ -12,10 +12,9 @@ class Social extends Model
     ];
  
     protected $primaryKey = 'user_id';
- 	protected $table = 'tbl_social';
+ 	protected $table = 'tbl_social_customers';
  	
- 	public function login(){
- 		return $this->belongsTo('App\Login', 'user');
+ 	public function customer(){
+ 		return $this->belongsTo('App\Customer', 'user');
  	}
-
 }

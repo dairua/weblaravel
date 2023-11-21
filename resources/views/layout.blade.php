@@ -134,7 +134,9 @@
                                    $customer_id = Session::get('customer_id');
                                    if($customer_id!=NULL){ 
                                  ?>
-                                  <li><a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i> Đăng xuất</a></li>
+                                  <li><a href="{{URL::to('/logout-checkout')}}"><i class="fa fa-lock"></i> Đăng xuất</a>
+                                <img width="15%" src="{{Session::get('customer_picture')}}">{{Session::get('customer_name')}}
+                                </li>
                                 
                                 <?php
                             }else{
