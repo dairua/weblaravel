@@ -6,7 +6,7 @@
                             <div class="product-image-wrapper" style="border:none;">
                             @foreach($post as $key => $p)
                                 <div class="single-products" style="margin: 10px 0;padding: 2px">
-                                        {!!$p->post_content!!}
+                                        {!! $p->post_content !!} 
                                 </div>
                                 <div class="clearfix"></div>
                             @endforeach

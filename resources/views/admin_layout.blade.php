@@ -265,9 +265,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 
 
-
-$('.money').simpleMoneyFormat();
-
 {!! Toastr::message() !!}
 @stack('js')
 <script type="text/javascript">

@@ -198,12 +198,12 @@ class PostController extends Controller
          //--seo
          }
 
-        $post=Post::where('post_id',$post_id)->first();
-        $post->post_views=$post->post_views + 1;
-        $post->save();
+        $all_post=Post::where('post_id',$post_id)->first();
+        $all_post->post_views=$all_post->post_views + 1;
+        $all_post->save();
  
          return view('pages.baiviet.baiviet')->with('category',$cate_product)->with('brand',$brand_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)
          ->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)
-         ->with('post',$post)->with('category_post',$category_post);
+         ->with('post',$post)->with('category_post',$category_post)->with('all_post',$all_post);
     }
 }
