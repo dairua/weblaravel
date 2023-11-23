@@ -42,7 +42,7 @@ class CategoryProduct extends Controller
     public function all_category_product(){
         $this->AuthLogin();
         $category_product=CategoryProductModel::where('category_parent',0)->orderBy('category_id','DESC')->get();
-    	$all_category_product = DB::table('tbl_category_product')->orderBy('category_parent','DESC')->paginate(5);
+    	$all_category_product = DB::table('tbl_category_product')->orderBy('category_parent','DESC')->get();
     	$manager_category_product  = view('admin.all_category_product')->with('all_category_product',$all_category_product)
         ->with('category_product',$category_product);
     	return view('admin_layout')->with('admin.all_category_product', $manager_category_product);

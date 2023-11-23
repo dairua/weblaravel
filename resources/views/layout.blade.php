@@ -27,8 +27,9 @@
     <link href="{{asset('public/frontend/css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/main.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/responsive.css')}}" rel="stylesheet">
-     <link href="{{asset('public/frontend/css/sweetalert.css')}}" rel="stylesheet">
-     <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" rel="stylesheet">
+    <link href="{{asset('public/frontend/css/sweetalert.css')}}" rel="stylesheet">
+    <link href="{{asset('public/frontend/css/jquery-ui.min.css')}}" rel="stylesheet">
+    
 
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -59,9 +60,6 @@
                         <div class="social-icons pull-right">
                             <ul class="nav navbar-nav">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <!-- <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li> -->
                                 <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                             </ul>
                         </div>
@@ -105,7 +103,6 @@
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
                                
-                                <!-- <li><a href="#"><i class="fa fa-star"></i> Yêu thích</a></li> -->
                                 <?php
                                    $customer_id = Session::get('customer_id');
                                    $shipping_id = Session::get('shipping_id');
@@ -366,9 +363,9 @@
 
 
     <script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
-   {{--  <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
-    <script>paypal.Buttons().render('body');</script> --}}
+    <script src="{{asset('public/frontend/js/jquery-ui.min.js')}}"></script>
+   {{--<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+    <script>paypal.Buttons().render('body');</script>--}}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v6.0&appId=2339123679735877&autoLogAppEvents=1"></script>

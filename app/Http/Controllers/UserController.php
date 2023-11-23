@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
         
-        $admin = Admin::with('roles')->orderBy('admin_id','DESC')->paginate(5);
+        $admin = Admin::with('roles')->orderBy('admin_id','DESC')->paginate(100);
         return view('admin.users.all_users')->with(compact('admin'))->with('category_post', $category_post);
     }
     public function impersonate($admin_id){
@@ -79,8 +79,8 @@ class UserController extends Controller
         $admin->admin_phone = $data['admin_phone'];
         $admin->admin_email = $data['admin_email'];
         $admin->admin_password = md5($data['admin_password']);
-        $admin->roles()->attach(Roles::where('name','user')->first());
         $admin->save();
+        $admin->roles()->attach(Roles::where('name','user')->first());
         Toastr::success('Thêm users thành công','Thành công');
         return Redirect::to('users');
     }

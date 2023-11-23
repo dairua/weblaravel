@@ -20,7 +20,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="{{asset('public/backend/css/font.css')}}" type="text/css"/>
 <link href="{{asset('public/backend/css/font-awesome.css')}}" rel="stylesheet"> 
 <link rel="stylesheet" href="{{asset('public/backend/css/morris.css')}}" type="text/css"/>
-<link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+<link rel="stylesheet" href="{{asset('public/backend/css/toastr.min.css')}}" type="text/css"/>
+<link rel="stylesheet" href="{{asset('public/backend/css/jquery.dataTables.css')}}" type="text/css"/>
+<!-- <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+<link rel="stylesheet" href="http://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css"> -->
+
 <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css"> -->
 
 <!-- calendar -->
@@ -262,11 +266,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('public/backend/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('public/backend/js/jquery-ui.js')}}"></script>
 <script src="{{asset('public/backend/js/simple.money.format.js')}}"></script>
-<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="{{asset('public/backend/js/toastr.min.js')}}"></script>
+<script src="{{asset('public/backend/js/jquery.dataTables.js')}}"></script>
+<!-- <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+<script src="http://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script> -->
 
 
 {!! Toastr::message() !!}
 @stack('js')
+<script type="text/javascript">
+    $(document).ready(function(
+        // $('#myTable').DataTable();
+        let table = new DataTable('#myTable');
+    ));
+</script>
 <script type="text/javascript">
     $('.price_format').simpleMoneyFormat();
 </script>
