@@ -28,7 +28,7 @@
     <link href="{{asset('public/frontend/css/main.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/responsive.css')}}" rel="stylesheet">
      <link href="{{asset('public/frontend/css/sweetalert.css')}}" rel="stylesheet">
-   
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -286,73 +286,6 @@
                             <p>Cam kết sản phẩm chính hãng</p>
                         </div>
                     </div>
-                    <div class="col-sm-7">
-                        <div class="col-sm-3">
-                            <div class="video-gallery text-center">
-                                <a href="#">
-                                    <div class="iframe-img">
-                                        <img src="{{('public/frontend/images/iframe1.png')}}" alt="" />
-                                    </div>
-                                    <div class="overlay-icon">
-                                        <i class="fa fa-play-circle-o"></i>
-                                    </div>
-                                </a>
-                                <p>Giới Thiệu</p>
-                                <h2>29/11/2023</h2>
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-3">
-                            <div class="video-gallery text-center">
-                                <a href="#">
-                                    <div class="iframe-img">
-                                         <img src="{{('public/frontend/images/iframe2.png')}}" alt="" />
-                                    </div>
-                                    <div class="overlay-icon">
-                                        <i class="fa fa-play-circle-o"></i>
-                                    </div>
-                                </a>
-                                <p>Giới Thiệu</p>
-                                <h2>29/11/2023</h2>
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-3">
-                            <div class="video-gallery text-center">
-                                <a href="#">
-                                    <div class="iframe-img">
-                                         <img src="{{('public/frontend/images/iframe3.png')}}" alt="" />
-                                    </div>
-                                    <div class="overlay-icon">
-                                        <i class="fa fa-play-circle-o"></i>
-                                    </div>
-                                </a>
-                                <p>Giới Thiệu</p>
-                                <h2>29/11/2023</h2>
-                            </div>
-                        </div>
-                        
-                        <div class="col-sm-3">
-                            <div class="video-gallery text-center">
-                                <a href="#">
-                                    <div class="iframe-img">
-                                         <img src="{{('public/frontend/images/iframe4.png')}}" alt="" />
-                                    </div>
-                                    <div class="overlay-icon">
-                                        <i class="fa fa-play-circle-o"></i>
-                                    </div>
-                                </a>
-                                <p>Giới Thiệu</p>
-                                <h2>29/11/2023</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="address">
-                            <img src="images/home/map.png" alt="" />
-                            <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -372,18 +305,6 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- <div class="col-sm-2">
-                        <div class="single-widget">
-                            <h2>Qick Shop</h2>
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">SamSung</a></li>
-                                <li><a href="#">Apple</a></li>
-                                <li><a href="#">LG</a></li>
-                                <li><a href="#">Xiaomi</a></li>
-                                <li><a href="#">BKAV</a></li>
-                            </ul>
-                        </div>
-                    </div> -->
                     <div class="col-sm-2">
                         <div class="single-widget">
                             <h2>Chính sách</h2>
@@ -445,6 +366,7 @@
 
 
     <script src="{{asset('public/frontend/js/sweetalert.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
    {{--  <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
     <script>paypal.Buttons().render('body');</script> --}}
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -459,7 +381,25 @@ $.ajaxSetup({
     }
 });
 </script>
-
+<script type="text/javascript">
+    $(document).ready(function(){
+        $( "#slider-range" ).slider({
+        orientation: "horizontal",
+        range: true,
+        min:{{$min_price}},
+        max:{{$max_price_range}},
+        step:10000,
+        values: [ {{$min_price}},{{$max_price}} ],
+        slide: function( event, ui ) {
+            $( "#amount" ).val( "đ" + ui.values[ 0 ] + " - đ" + ui.values[ 1 ] );
+            $( "#start_price" ).val(ui.values[ 0 ]);
+            $( "#end_price" ).val(ui.values[ 1 ] );
+        }
+    });
+    $( "#amount" ).val( "đ" + $( "#slider-range" ).slider( "values", 0 ) +
+      " - đ" + $( "#slider-range" ).slider( "values", 1 ) );
+    });
+</script>
 <script type="text/javascript">
     $('#keywords').keyup(function(){
         var query = $(this).val();
