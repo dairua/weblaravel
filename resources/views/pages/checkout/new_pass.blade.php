@@ -1,6 +1,5 @@
 @extends('layout')
 @section('content')
-
 	<section id="form"><!--form-->
 		<div class="container">
 			<div class="row">
@@ -15,10 +14,16 @@
                     </div>
                 @endif
 					<div class="login-form"><!--login form-->
-						<h2>Lấy lại mật khẩu</h2>
-						<form action="{{url('/recover-pass')}}" method="POST">
+                    @php
+                    $token=$_GET['token'];
+                    $email=$_GET['email'];
+                    @endphp
+						<h2>Điền mật khẩu mới</h2>
+						<form action="{{url('/reset-new-pass')}}" method="POST">
 							@csrf
-							<input type="text" name="email_account" placeholder="Nhập email" />
+                            <input type="hidden" name="email" value="{{$email}}">
+                            <input type="hidden" name="token" value="{{$token}}">
+							<input type="text" name="password_account" placeholder="Nhập mật khẩu mới" />
 							<button type="submit" class="btn btn-default">Gửi</button>
 						</form>
 					</div><!--/login form-->

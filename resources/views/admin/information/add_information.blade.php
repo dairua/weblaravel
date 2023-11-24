@@ -34,7 +34,11 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Hình ảnh logo</label>
                                     <input type="file" name="info_image"  class="form-control" id="exampleInputEmail1">
-                                    <img src="{{URL::to('public/uploads/contact/'.$val->info_logo)}}" height="100" width="100">
+                                    <img src="{{url('public/uploads/contact/'.$val->info_logo)}}" height="100" width="100">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Slogan logo</label>
+                                    <input type="text" name="slogan_logo"  value="{{$val->slogan_logo}}"class="form-control" id="exampleInputEmail1">
                                 </div>
                                
                                 <button type="submit" name="add_category_product" class="btn btn-info">Cập Nhật liên hệ</button>

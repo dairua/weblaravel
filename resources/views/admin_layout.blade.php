@@ -8,6 +8,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
 <link rel="stylesheet" href="{{asset('public/backend/css/bootstrap.min.css')}}" >
+<link  rel="icon" type="image/x-icon" href="{{asset('public/frontend/images/Handmade.png')}}" size="16x16" />
 
 <!-- //bootstrap-css -->
 <!-- Custom CSS -->

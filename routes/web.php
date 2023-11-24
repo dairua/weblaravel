@@ -57,9 +57,13 @@ Route::get('/active-category-product/{category_product_id}','CategoryProduct@act
 
 Route::post('/save-category-product','CategoryProduct@save_category_product');
 Route::post('/update-category-product/{category_product_id}','CategoryProduct@update_category_product');
+
 //Send Mail 
-Route::get('/send-mail','HomeController@send_mail');
-Route::get('/quen-mat-khau','HomeController@quen_mat_khau');
+Route::get('/send-mail','MailController@send_mail');
+Route::get('/quen-mat-khau','MailController@quen_mat_khau');
+Route::get('/update-new-pass','MailController@update_new_pass');
+Route::post('/recover-pass','MailController@recover_pass');
+Route::post('/reset-new-pass','MailController@reset_new_pass');
 
 // //Login facebook
 // Route::get('/login-facebook','AdminController@login_facebook');
@@ -203,3 +207,5 @@ Route::get('/login-auth','AuthController@login_auth');
 Route::get('/logout-auth','AuthController@logout_auth');
 Route::post('/register','AuthController@register');
 Route::post('/login','AuthController@login');
+//QR
+Route::get('/qrcode', 'QrCodeController@index');

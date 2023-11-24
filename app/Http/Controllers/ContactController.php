@@ -43,6 +43,7 @@ class ContactController extends Controller
         $contact->info_contact = $data['info_contact'];
         $contact->info_map = $data['info_map'];
         $contact->info_fanpage = $data['info_fanpage'];
+        $contact->slogan_logo = $data['slogan_logo'];
         $get_image=$request->file('info_image');
         $path='public/uploads/contact';
         if($get_image){
@@ -64,10 +65,11 @@ class ContactController extends Controller
         $contact->info_contact = $data['info_contact'];
         $contact->info_map = $data['info_map'];
         $contact->info_fanpage = $data['info_fanpage'];
+        $contact->slogan_logo = $data['slogan_logo'];
         $get_image=$request->file('info_image');
         $path='public/uploads/contact';
         if($get_image){
-            unlink($path.$contact->info_logo);
+            // unlink($path.$contact->info_logo);
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.',$get_name_image));
             $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();

@@ -6,6 +6,15 @@
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
+					@if(session()->has('message'))
+                    <div class="alert alert-success">
+                        {!! session()->get('message') !!}
+                    </div>
+                    @elseif(session()->has('error'))
+                     <div class="alert alert-danger">
+                        {!! session()->get('error') !!}
+                    </div>
+                    @endif
 						<h2>Đăng nhập tài khoản</h2>
 						<form action="{{URL::to('/login-customer')}}" method="POST">
 							{{csrf_field()}}

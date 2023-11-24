@@ -192,9 +192,9 @@ class ProductController extends Controller
                 //--seo
             }
 
-            $product=Product::where('product_id',$product_id)->first();
-            $product->product_views=$product->product_views + 1;
-            $product->save();
+            $all_product=Product::where('product_id',$product_id)->first();
+            $all_product->product_views=$all_product->product_views + 1;
+            $all_product->save();
        
         $related_product = DB::table('tbl_product')
         ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
@@ -203,7 +203,7 @@ class ProductController extends Controller
 
 
         return view('pages.sanpham.show_details')->with('category_post', $category_post)->with('category',$cate_product)->with('brand',$brand_product)->with('product_details',$details_product)->with('relate',$related_product)->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)->with('url_canonical',$url_canonical)->with('slider',$slider)
-        ->with('product_cate',$product_cate)->with('cate_slug',$cate_slug);
+        ->with('product_cate',$product_cate)->with('cate_slug',$cate_slug)->with('all_product',$all_product);
 
     }
 }

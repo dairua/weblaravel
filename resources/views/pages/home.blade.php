@@ -35,17 +35,21 @@
                                              </a>
                                             <input type="button" value="Thêm giỏ hàng" class="btn btn-default add-to-cart" data-id_product="{{$product->product_id}}" name="add-to-cart">
                                             </form>
+                                            <style type="text/css">
+                                                p.qrcode_style{
+                                                    position: absolute;
+                                                    top:2%;
+                                                    left:3%;
+                                                }
+                                            </style>
 
+                                            @php
+                                            $qrcode_url = url('chi-tiet/'.$product->product_slug);
+                                            @endphp
+                                            <p class="qrcode_style">{{QrCode::size(50)->generate($qrcode_url)}}</p>
                                         </div>
                                       
                                 </div>
-                           
-                                <!-- <div class="choose">
-                                    <ul class="nav nav-pills nav-justified">
-                                        <li><a href="#"><i class="fa fa-plus-square"></i>Yêu thích</a></li>
-                                        <li><a href="#"><i class="fa fa-plus-square"></i>So sánh</a></li>
-                                    </ul>
-                                </div> -->
                             </div>
                         </div>
                         @endforeach

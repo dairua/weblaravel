@@ -198,7 +198,15 @@ a#scrollUp i{
   padding-right: 0;
 }
 
-
+.information_footer ol {
+  padding: 0 !important;
+}
+.information_footer ol li span{
+  font-size: 14px;
+}
+.information_footer ol li {
+  margin: 13px 0px;
+}
 .shop-menu ul li a {
   /* background: #FFFFFF; */
   color: #696763;

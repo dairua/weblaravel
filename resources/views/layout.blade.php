@@ -9,7 +9,7 @@
     <meta name="robots" content="INDEX,FOLLOW"/>
     <link  rel="canonical" href="{{$url_canonical}}" />
     <meta name="author" content="">
-    <link  rel="icon" type="image/x-icon" href="" />
+    <link  rel="icon" type="image/x-icon" href="{{asset('public/frontend/images/Handmade.png')}}" size="16x16" />
     
     {{--   <meta property="og:image" content="{{$image_og}}" />  
       <meta property="og:site_name" content="http://localhost/Laravel/Mylaravel" />
@@ -29,6 +29,7 @@
     <link href="{{asset('public/frontend/css/responsive.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/sweetalert.css')}}" rel="stylesheet">
     <link href="{{asset('public/frontend/css/jquery-ui.min.css')}}" rel="stylesheet">
+
     
 
     <!--[if lt IE 9]>
@@ -277,12 +278,14 @@
         <div class="footer-top">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-2">
+                @foreach($contact_footer as $key => $logo)
+                    <div class="col-sm-3">
                         <div class="companyinfo">
-                            <h2><span>Phương Anh</span>-Handmade Shop</h2>
-                            <p>Cam kết sản phẩm chính hãng</p>
+                            <p><img width="50%"src="{{asset('public/uploads/contact/'.$logo->info_logo)}}" alt=""></p>
+                            <p>{{$logo->slogan_logo}}</p>
                         </div>
                     </div>
+                @endforeach
                 </div>
             </div>
         </div>
@@ -298,39 +301,32 @@
                                 <li><a href="#">Liên hệ với chúng tôi</a></li>
                                 <li><a href="#">Tình trạng đơn hàng</a></li>
                                 <li><a href="#">Thay đổi địa chỉ</a></li>
-                                <li><a href="#">Các câu hỏi thường gặp</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    @foreach($contact_footer as $key => $contact_foo)
+                    <div class="col-sm-3">
                         <div class="single-widget">
-                            <h2>Chính sách</h2>
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Điều khoản sử dụng</a></li>
-                                <li><a href="#">Chính sách bảo mật</a></li>
-                                <li><a href="#">Chính sách đổi trả</a></li>
-                                <li><a href="#">Hệ thống thanh toán</a></li>
-                                <li><a href="#">Hệ thống vocher</a></li>
-                            </ul>
+                            <h2>Thông tin Shop</h2>
+                            <div class="information_footer">
+                                {!! $contact_foo-> info_contact!!}
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-sm-3">
                         <div class="single-widget">
-                            <h2>Về cửa hàng</h2>
+                            <h2>Fanpage</h2>
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Thông tin công ty</a></li>
-                                <li><a href="#">Nghề nghiêp</a></li>
-                                <li><a href="#">Địa chỉ cửa hàng</a></li>
-                                <li><a href="#">Chương trình liên kết</a></li>
-                                <li><a href="#">Bản quyền</a></li>
+                                <li>{!! $contact_foo-> info_fanpage!!}</li>
                             </ul>
                         </div>
                     </div>
+                    @endforeach
                     <div class="col-sm-3 col-sm-offset-1">
                         <div class="single-widget">
-                            <h2>Về cửa hàng</h2>
+                            <h2>EMAIL</h2>
                             <form action="#" class="searchform">
-                                <input type="text" placeholder="Your email address" />
+                                <input type="text" placeholder="Điền email của bạn..." />
                                 <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
                                 <p>Điền Email của bạn để nhận được những thông báo mới nhất...</p>
                             </form>
@@ -340,15 +336,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- <div class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <p class="pull-left">Copyright © 2020 E-SHOPPER Inc. All rights reserved.</p>
-                    <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
-                </div>
-            </div>
-        </div> -->
         
     </footer><!--/Footer-->
     
@@ -380,7 +367,7 @@ $.ajaxSetup({
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
-        $( "#slider-range" ).slider({
+        $("#slider-range" ).slider({
         orientation: "horizontal",
         range: true,
         min:{{$min_price}},

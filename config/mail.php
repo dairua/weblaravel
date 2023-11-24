@@ -19,7 +19,7 @@ return [
     'driver' => env('MAIL_DRIVER', 'smtp'),
 
     'stream' =>[
-        'ssl'=>[
+        'tls'=>[
         'allow_seft_signed'=> true,
         'verify_peer' => false,
         'verify_peer_name' => false,
@@ -37,7 +37,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.googlemail.com'),
+    'host' => env('MAIL_HOST', 'smtp.gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 465),
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -79,7 +79,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     /*
     |--------------------------------------------------------------------------
