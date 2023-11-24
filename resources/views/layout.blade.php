@@ -260,7 +260,12 @@
                             </div>
                         </div><!--/brands_products-->
                         
-                     
+                        <div class="brands_products">
+                            <h2>Sản phẩm đã xem</h2>
+                            <div class="brands-name">
+                                <div id="row_viewed" class="row"></div>
+                            </div>
+                        </div>
                     
                     </div>
                 </div>
@@ -339,7 +344,7 @@
         
     </footer><!--/Footer-->
     
-
+                
   
     <script src="{{asset('public/frontend/js/jquery.js')}}"></script>
     <script src="{{asset('public/frontend/js/bootstrap.min.js')}}"></script>
@@ -364,6 +369,86 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
+</script>
+<script type="text/javascript">
+    
+    function viewed(){
+        if(localStorage.getItem('viewed')!=null){
+            var data=JSON.parse(localStorage.getItem('viewed'));
+            data.reverse();
+            document.getElementById('row_viewed').style.overflow='scroll';
+            document.getElementById('row_viewed').style.height='500px';
+
+            for(i=0;i<data.length;i++){
+                var name=data[i].name;
+                var price=data[i].price;
+                var image=data[i].image;
+                var url=data[i].url;
+
+                $('#row_viewed').append('
+                <div class="row" style="margin:10px 0">
+                    <div class="col-sm-4">
+                        <img width="100%" src="'+image+'">
+                    </div>
+                    <div class="col-sm-4 info_wishlist">
+                        <p>'+name+'</p>
+                        <p style="color:#FE980F">'+price+'</p>
+                        <a href="'+url+'">Đặt hàng</a>
+                    </div> 
+                                      
+                ');
+                
+            }
+        }
+    }
+    viewed();
+    product_viewed();
+    function product_viewed(){
+        var id_product = $('#product_viewed_id').val();
+        if(id_product != undefined){
+        var id=id_product; 
+        var name=documnet.getElementById('viewed_productname'+id).value;
+        var price=documnet.getElementById('viewed_productprice'+id).value;
+        var image=documnet.getElementById('viewed_productimage'+id).value;
+        var url=documnet.getElementById('viewed_producturl'+id).value;
+
+        var newItem={
+            'url':url,
+            'id':id,
+            'name':name,
+            'price':price,
+            'image':image
+        }
+
+        var old_data = JSON.parse(localStorage.getItem('viewed'));
+
+        if(localStorage.getItem('viewed')==null){
+            localStorage.setItem('viewed','[]');
+        }
+
+        var matches = $.grep(old_data, function(obj){
+            return obj.id==id;
+        });
+
+        if(matches.length){
+            
+        }else{
+            old_data.push(newItem);
+            $('#row_viewed').append('
+                <div class="row" style="margin:10px 0">
+                    <div class="col-sm-4">
+                        <img width="100%" src="'+newItem.image+'">
+                    </div>
+                    <div class="col-sm-4 info_wishlist">
+                        <p>'+newItem.name+'</p>
+                        <p style="color:#FE980F">'+newItem.price+'</p>
+                        <a href="'+newItem.url+'">Đặt hàng</a>
+                    </div>                  
+                ');
+        }
+        localStorage.setItem('viewed',JSON.stringify(old_data));
+    }
+    }
 </script>
 <script type="text/javascript">
     $(document).ready(function(){

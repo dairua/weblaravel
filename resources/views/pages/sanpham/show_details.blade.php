@@ -1,6 +1,11 @@
 @extends('layout')
 @section('content')
 @foreach($product_details as $key => $value)
+<input type="hidden" id="product_viewed_id" value="{{$value->product_id}}">
+<input type="hidden" id="viewed_productname{{$value->product_id}}" value="{{$value->product_name}}">
+<input type="hidden" id="viewed_producturl{{$value->product_id}}" value="{{url('/chi-tiet/'.$value->product_slug)}}">
+<input type="hidden" id="viewed_productimage{{$value->product_id}}" value="{{asset('public/uploads/product/'.$value->product_image)}}">
+<input type="hidden" id="viewed_productprice{{$value->product_id}}" value="{{number_format($value->product_price,0,',','.').' '.'VNĐ'}}">
 <div class="product-details"><!--product-details-->
 <a href="{{URL::to('/')}}" style ="color:#00adc4"class="btn btn-default fa fa-heart-o" aria-hidden="true" >Trang chủ</a>
 <nav aria-label="breadcrumb">
@@ -13,7 +18,6 @@
 						<div class="col-sm-5">
 							<div class="view-product">
 								<img src="{{URL::to('/public/uploads/product/'.$value->product_image)}}" alt="" />
-								<!-- <h3>ZOOM</h3> -->
 							</div>
 							<div id="similar-product" class="carousel slide" data-ride="carousel">
 								
@@ -22,7 +26,6 @@
 
 										<div class="item active">
 										  <a href=""><img src="{{URL::to('public/frontend/images/cat1.jpg')}}" alt=""></a>
-										  <!-- <a href=""><img src="{{URL::to('public/frontend/images/cat3.jpg')}}" alt=""></a> -->
 										  <a href=""><img src="{{URL::to('public/frontend/images/cat2.jpg')}}" alt=""></a>
 										</div>
 										
@@ -82,8 +85,6 @@
 							<ul class="nav nav-tabs">
 								<li class="active"><a href="#details" data-toggle="tab">Mô tả</a></li>
 								<li><a href="#companyprofile" data-toggle="tab">Chi tiết sản phẩm</a></li>
-							
-								<li ><a href="#reviews" data-toggle="tab">Đánh giá</a></li>
 							</ul>
 						</div>
 						<div class="tab-content">
@@ -96,30 +97,6 @@
 								<p>{!!$value->product_content!!}</p>
 								
 						
-							</div>
-							
-							<div class="tab-pane fade" id="reviews" >
-								<div class="col-sm-12">
-									<ul>
-										<li><a href=""><i class="fa fa-user"></i>User</a></li>
-										<li><a href=""><i class="fa fa-clock-o"></i>xx:xx xM</a></li>
-										<li><a href=""><i class="fa fa-calendar-o"></i>xx xx xxxx</a></li>
-									</ul>
-									
-									<p><b>Viết đánh giá của bạn về sản phẩm</b></p>
-									
-									<form action="#">
-										<span>
-											<input type="text" placeholder="Tên của bạn"/>
-											<input type="email" placeholder="Email của bạn"/>
-										</span>
-										<textarea name="" ></textarea>
-										<b>Xếp hạng: </b> <img src="images/product-details/rating.png" alt="" />
-										<button type="button" class="btn btn-default pull-right">
-											Đánh giá
-										</button>
-									</form>
-								</div>
 							</div>
 							
 
@@ -135,14 +112,31 @@
 							@foreach($relate as $key => $lienquan)
 									<div class="col-sm-4">
 										<div class="product-image-wrapper">
-											 <div class="single-products">
+											<div class="single-products">
 		                                        <div class="productinfo text-center product-related">
-		                                            <img src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}" alt="" />
+												<form>
+                                                @csrf
+                                                <input type="hidden" value="{{$lienquan->product_id}}" class="cart_product_id_{{$lienquan->product_id}}">
+                                                <input type="hidden" id="viewed_productname{{$lienquan->product_id}}" value="{{$lienquan->product_name}}" class="cart_product_name_{{$lienquan->product_id}}">
+                                              
+                                                <input type="hidden" value="{{$lienquan->product_quantity}}" class="cart_product_quantity_{{$lienquan->product_id}}">
+                                                
+                                                <input type="hidden" value="{{$lienquan->product_image}}" class="cart_product_image_{{$lienquan->product_id}}">
+                                                <input type="hidden" id="viewed_productprice{{$lienquan->product_id}}" value="{{$lienquan->product_price}}" class="cart_product_price_{{$lienquan->product_id}}">
+                                                <input type="hidden" value="1" class="cart_product_qty_{{$lienquan->product_id}}">
+    
+                                                <a id="viewed_producturl{{$lienquan->product_id}}" href="{{URL::to('/chi-tiet/'.$lienquan->product_slug)}}">
+                                                    <img id="viewed_productimage{{$lienquan->product_id}}" src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}" alt="" />
+                                                    <h2>{{number_format($lienquan->product_price,0,',','.').' '.'VNĐ'}}</h2>
+                                                    <p>{{$lienquan->product_name}}</p> 
+                                                 </a>
+                                                <input type="button" value="Thêm giỏ hàng" class="btn btn-default add-to-cart" data-id_product="{{$lienquan->product_id}}" name="add-to-cart">
+                                                </form>
+		                                            <!-- <img src="{{URL::to('public/uploads/product/'.$lienquan->product_image)}}" alt="" />
 		                                            <h2>{{number_format($lienquan->product_price,0,',','.').' '.'VNĐ'}}</h2>
 		                                            <p>{{$lienquan->product_name}}</p>
-		                                         
-		                                        </div>
-		                                      
+													<input type="button" value="Thêm giỏ hàng" class="btn btn-default add-to-cart" data-id_product="{{$lienquan->product_id}}" name="add-to-cart"> -->
+		                                        </div> 
                                 			</div>
 										</div>
 									</div>
