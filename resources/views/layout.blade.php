@@ -76,29 +76,6 @@
                         <div class="logo pull-left">
                             <a href="index.html"><img src="{{('public/frontend/images/logohm.png')}}" alt="" /></a>
                         </div>
-                        <!-- <div class="btn-group pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    Ngôn Ngữ
-                                    <span class="caret"></span>
-                                </button>   
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Việt Nam</a></li>
-                                    <li><a href="#">Tiếng Anh</a></li>
-                                </ul>
-                            </div>
-                            
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    Tiền tệ
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Đô la</a></li>
-                                    <li><a href="#">Tiền Việt</a></li>
-                                </ul>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
@@ -199,8 +176,9 @@
                             {{csrf_field()}}
                         <div class="search_box pull-right">
                             <input type="text" name="keywords_submit" id="keywords" placeholder="Tìm kiếm sản phẩm"/>
-                            <div id="search_ajax"></div>
+                            <div id="search_ajax">
                             <input type="submit" style="margin-top:0;color:#666" name="search_items" class="btn btn-primary btn-sm" value="Tìm kiếm">
+                            </div> 
                         </div>
                         </form>
                     </div>

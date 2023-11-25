@@ -209,3 +209,6 @@ Route::post('/register','AuthController@register');
 Route::post('/login','AuthController@login');
 //QR
 Route::get('/qrcode', 'QrCodeController@index');
+
+//VNPAY
+Route::post('/vnpay-payment','CheckoutController@vnpay_payment');
