@@ -23,7 +23,7 @@ class HomeController extends Controller
     }
     public function index(Request $request){
         //CategoryPost
-        $category_post = CatePost::orderBy('cate_post_id','DESC')->get();
+        $category_post = CatePost::where('cate_post_id','<>',5)->orderBy('cate_post_id','DESC')->get();
 
         //slide
         $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();

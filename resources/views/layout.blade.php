@@ -280,10 +280,9 @@
                         <div class="single-widget">
                             <h2>Dịch vụ</h2>
                             <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Trợ giúp trực tuyến</a></li>
-                                <li><a href="#">Liên hệ với chúng tôi</a></li>
-                                <li><a href="#">Tình trạng đơn hàng</a></li>
-                                <li><a href="#">Thay đổi địa chỉ</a></li>
+                                @foreach($post_footer as $key =>$post_foot) 
+                                <li><a href="{{url('/bai-viet/'.$post_foot->post_slug)}}">{{$post_foot->post_title}}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

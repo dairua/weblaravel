@@ -8,6 +8,7 @@ use App\Slider;
 use CategoryProductModel;
 use Session;
 use Auth;
+use Toastr;
 use App\CatePost;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;

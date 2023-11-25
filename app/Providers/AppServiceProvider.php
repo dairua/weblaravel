@@ -28,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         view()->composer('*',function($view){
+            $post_footer= Post::where('cate_post_id',5)->get();
             $contact_footer = Contact::where('info_id',1)->get();
 
             $min_price=Product::min('product_price');
@@ -40,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
             $app_customer = Customer::all()->count();
 
             $view->with('app_product',$app_product)->with('app_post',$app_post)->with('app_order',$app_order)->with('app_customer',$app_customer)
-            ->with('min_price',$min_price)->with('max_price',$max_price)->with('max_price_range',$max_price_range)->with('contact_footer',$contact_footer);
+            ->with('min_price',$min_price)->with('max_price',$max_price)->with('max_price_range',$max_price_range)->with('contact_footer',$contact_footer)->with('post_footer',$post_footer);
         });
     }
 }
