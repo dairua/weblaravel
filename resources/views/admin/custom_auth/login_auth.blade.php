@@ -44,7 +44,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<input type="password" class="ggg" name="admin_password" placeholder="Điền password" >
 
 			<span><input type="checkbox" />Nhớ đăng nhập</span>
-			<h6><a href="#">Quên mật khẩu</a></h6>
+			<!-- <h6><a href="#">Quên mật khẩu</a></h6> -->
 				<div class="clearfix"></div>
 				<input type="submit" value="Đăng nhập" name="login">
 

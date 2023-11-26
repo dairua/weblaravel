@@ -19,14 +19,19 @@ use Toastr;
 class OrderController extends Controller
 {
 	public function order_code(Request $request){
-		$order = Order::where('order_code',$request->id)->first();
+		$data = $request->all();
+		$order = Order::find($data['order_id']);
 		$order->delete();
+		// $slider = Slider::find($slide_id);
+        // $slider->delete();
+        Toastr::success('Xóa slider thành công','Thành công');
+        return redirect()->back();
 	}
 	public function update_qty(Request $request){
 		$data = $request->all();
 		$order_details = OrderDetails::where('product_id',$data['order_product_id'])->where('order_code',$data['order_code'])->first();
 		$order_details->product_sales_quantity = $data['order_qty'];
-		$order_details->save();
+		$order_details->save();Toastr::success('Cập nhật số lượng thành công','Thành công');
 	}
 	public function update_order_qty(Request $request){
 		//update order
@@ -34,6 +39,7 @@ class OrderController extends Controller
 		$order = Order::find($data['order_id']);
 		$order->order_status = $data['order_status'];
 		$order->save();
+		
 
 		//order_date
 		$order_date = $order->order_date;

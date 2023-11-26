@@ -114,6 +114,8 @@ Route::post('/update-post/{post_id}','PostController@update_post');
 Route::group(['middleware' => 'auth.roles'], function () {
 	Route::get('/add-product','ProductController@add_product');
     Route::get('/edit-product/{product_id}','ProductController@edit_product');
+    Route::get('/delete-product/{product_id}','ProductController@delete_product');
+    Route::get('/all-product','ProductController@all_product');
 });
 // Route::get('users',
 // 		[
@@ -131,10 +133,6 @@ Route::post('store-users','UserController@store_users');
 Route::post('assign-roles','UserController@assign_roles')->middleware('auth.roles');
 
 //Product
-Route::get('/add-product','ProductController@add_product');
-Route::get('/edit-product/{product_id}','ProductController@edit_product');
-Route::get('/delete-product/{product_id}','ProductController@delete_product');
-Route::get('/all-product','ProductController@all_product');
 Route::get('/unactive-product/{product_id}','ProductController@unactive_product');
 Route::get('/active-product/{product_id}','ProductController@active_product');
 Route::post('/save-product','ProductController@save_product')->name('save.product');

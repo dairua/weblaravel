@@ -19,7 +19,7 @@ class AuthController extends Controller
     public function logout_auth(){
         Auth::logout();
         Toastr::success('Đăng xuất auth thành công','Thành công');
-        return redirect('/logout-auth');
+        return redirect('/login-auth');
     }
     public function login(Request $request){
         $this->validate($request,[
