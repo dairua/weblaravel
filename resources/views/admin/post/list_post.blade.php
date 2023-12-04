@@ -38,7 +38,7 @@
           <tr>
             <td><label class="i-checks m-b-none"><input type="checkbox" name="post[]"><i></i></label></td>
             <td>{{ $post->post_title }}</td>
-            <td><img src="{{URL::to('public/uploads/post/'.$post->post_image)}}" height="100" width="100"></td>
+            <td><img src="{{asset('public/uploads/post/'.$post->post_image)}}" height="100" width="100"></td>
             <td>{!! $post->post_slug !!}</td>
             <td>{!! $post->post_desc !!}</td>
             <td>{!! $post->post_meta_keywords !!}</td>

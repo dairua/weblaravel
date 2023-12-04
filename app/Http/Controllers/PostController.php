@@ -46,6 +46,8 @@ class PostController extends Controller
     }
     public function save_post(Request $request){
         $this->AuthLogin();
+    	
+        // $this->AuthLogin();
     	// $data = $request->all();
         // $post = new Post();
         // $post->post_title = $data['post_title'];
@@ -64,14 +66,14 @@ class PostController extends Controller
         //     $get_name_image = $get_image->getClientOriginalName();
         //     $name_image = current(explode('.',$get_name_image));
         //     $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-        //     $get_image->move('/public/uploads/post',$new_image);
+        //     $get_image->move('public/uploads/post',$new_image);
         //     $post->post_image = $new_image;
         //     $post->save();
-        //     Session::put('message','Thêm bài viết thành công');
+        //     Toastr::success('Thêm bài viết thành công','Thành công');
         //     return redirect()->back();
         // }
         //     // $post->save();
-        //     Session::put('message','Thêm bài viết thành công');
+        //     Toastr::warning('Thêm Ảnh','Cảnh Báo');
         //     return redirect()->back();
 
         $data=$request->all();
@@ -87,7 +89,7 @@ class PostController extends Controller
         $post->post_image = $data['post_image'];
     	
         $get_image = $request->file('post_image');
-        $path='public/uploads/post';
+        $path='/public/uploads/post';
         if($get_image){
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.',$get_name_image));

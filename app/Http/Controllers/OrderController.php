@@ -10,21 +10,22 @@ use App\Order;
 use App\OrderDetails;
 use App\Customer;
 use App\Catepost;
+use App\Brand;
+use App\Slider;
 use App\Coupon;
 use App\Product;
 use App\Statistic;
 use PDF;
+use Session;
 use Toastr;
+use DB;
 
 class OrderController extends Controller
 {
-	public function order_code(Request $request){
-		$data = $request->all();
-		$order = Order::find($data['order_id']);
+	public function order_code(Request $request,$order_code){
+		$order = Order::where('order_code',$order_code)->first();
 		$order->delete();
-		// $slider = Slider::find($slide_id);
-        // $slider->delete();
-        Toastr::success('Xóa slider thành công','Thành công');
+        Toastr::success('Xóa đơn hàng thành công','Thành công');
         return redirect()->back();
 	}
 	public function update_qty(Request $request){
@@ -287,10 +288,10 @@ class OrderController extends Controller
 
 	}
 	public function view_order($order_code){
-		$category_post = CatePost::orderBy('cate_post_id','DESC')->get();
+		
 		$order_details = OrderDetails::with('product')->where('order_code',$order_code)->get();
-		$order = Order::where('order_code',$order_code)->get();
-		foreach($order as $key => $ord){
+		$getorder = Order::where('order_code',$order_code)->get();
+		foreach($getorder as $key => $ord){
 			$customer_id = $ord->customer_id;
 			$shipping_id = $ord->shipping_id;
 			$order_status = $ord->order_status;
@@ -313,11 +314,92 @@ class OrderController extends Controller
 			$coupon_number = 0;
 		}
 		
-		return view('admin.view_order')->with(compact('order_details','customer','shipping','order_details','coupon_condition','coupon_number','order','order_status'))->with('category_post', $category_post);
+		return view('admin.view_order')->with(compact('order_details','order_details_product','customer','shipping','coupon_condition','coupon_number','getorder','order_status'));
 
 	}
-    public function manage_order(){
-    	$order = Order::orderby('created_at','DESC')->paginate(5);
-    	return view('admin.manage_order')->with(compact('order'));
+    public function manage_order(Request $request){
+    	$getorder = Order::orderby('order_id','DESC')->paginate(20);
+    	return view('admin.manage_order')->with(compact('getorder'));
     }
+	public function history(Request $request){
+		if(!Session::get('customer_id')){
+			return redirect('dang-nhap')->with('error', 'Vui lòng đăng nhập để xem lịch sử đơn hàng');
+		}else{
+			
+    	    
+			$category_post = CatePost::where('cate_post_id','<>',5)->orderBy('cate_post_id','DESC')->get();
+
+            //slide
+            $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+            //seo 
+            $meta_desc = "Lịch sử đơn hàng"; 
+            $meta_keywords = "Lịch sử đơn hàng";
+            $meta_title = "Lịch sử đơn hàng";
+            $url_canonical = $request->url();
+            //--seo
+            
+    	    $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get(); 
+            $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
+			$getorder = Order::where('customer_id', Session::get('customer_id'))->orderby('order_id','DESC')->paginate(20);
+    
+    	    return view('pages.history.history')->with('category',$cate_product)->with('brand',$brand_product)
+            ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)
+            ->with('url_canonical',$url_canonical)->with('slider',$slider)->with('category_post',$category_post)
+			->with('getorder',$getorder); //1
+		}
+	}
+	public function view_history(Request $request, $order_code){
+		if(!Session::get('customer_id')){
+			return redirect('dang-nhap')->with('error', 'Vui lòng đăng nhập để xem lịch sử đơn hàng');
+		}else{
+			
+    	    
+			$category_post = CatePost::where('cate_post_id','<>',5)->orderBy('cate_post_id','DESC')->get();
+
+            //slide
+            $slider = Slider::orderBy('slider_id','DESC')->where('slider_status','1')->take(4)->get();
+            //seo 
+            $meta_desc = "Lịch sử đơn hàng"; 
+            $meta_keywords = "Lịch sử đơn hàng";
+            $meta_title = "Lịch sử đơn hàng";
+            $url_canonical = $request->url();
+            //--seo
+            
+    	    $cate_product = DB::table('tbl_category_product')->where('category_status','0')->orderby('category_id','desc')->get(); 
+            $brand_product = DB::table('tbl_brand')->where('brand_status','0')->orderby('brand_id','desc')->get(); 
+			
+			//xem ls don hang
+			$order_details = OrderDetails::with('product')->where('order_code',$order_code)->get();
+		    $getorder = Order::where('order_code',$order_code)->get();
+		    foreach($getorder as $key => $ord){
+			$customer_id = $ord->customer_id;
+			$shipping_id = $ord->shipping_id;
+			$order_status = $ord->order_status;
+		    }
+		    $customer = Customer::where('customer_id',$customer_id)->first();
+		    $shipping = Shipping::where('shipping_id',$shipping_id)->first();
+
+		$order_details_product = OrderDetails::with('product')->where('order_code', $order_code)->get();
+    
+		    foreach($order_details_product as $key => $order_d){
+    
+		    	$product_coupon = $order_d->product_coupon;
+		    }
+		    if($product_coupon != 'no'){
+		    	$coupon = Coupon::where('coupon_code',$product_coupon)->first();
+		    	$coupon_condition = $coupon->coupon_condition;
+		    	$coupon_number = $coupon->coupon_number;
+		    }else{
+		    	$coupon_condition = 2;
+		    	$coupon_number = 0;
+		    }
+			
+    	    return view('pages.history.view_history')->with('category',$cate_product)->with('brand',$brand_product)
+            ->with('meta_desc',$meta_desc)->with('meta_keywords',$meta_keywords)->with('meta_title',$meta_title)
+            ->with('url_canonical',$url_canonical)->with('slider',$slider)->with('category_post',$category_post)
+			->with('order_details',$order_details)->with('order_details_product',$order_details_product)->with('customer',$customer)
+			->with('shipping',$shipping)->with('coupon_condition',$coupon_condition)->with('coupon_number',$coupon_number)
+			->with('getorder',$getorder)->with('order_status',$order_status); //1
+		}
+	}
 }

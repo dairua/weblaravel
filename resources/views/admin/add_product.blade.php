@@ -32,11 +32,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Giá sản phẩm</label>
-                                    <input type="text" data-validation="length" data-validation-length="min10" data-validation-error-msg="Làm ơn điền số tiền" name="product_price" class="form-control price_format" id="" placeholder="Tên danh mục">
+                                    <input type="text" data-validation="length" data-validation-length="min1" data-validation-error-msg="Làm ơn điền số tiền" name="product_price" class="form-control price_format" id="" placeholder="Tên danh mục">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Giá gốc</label>
-                                    <input type="text" data-validation="length" data-validation-length="min10" data-validation-error-msg="Làm ơn điền số tiền" name="price_cost" class="form-control price_format" id="" placeholder="Tên danh mục">
+                                    <input type="text" data-validation="length" data-validation-length="min1"  data-validation-error-msg="Làm ơn điền số tiền" name="price_cost" class="form-control price_format" id="" placeholder="Tên danh mục">
                                 </div>
                                   <div class="form-group">
                                     <label for="exampleInputEmail1">Hình ảnh sản phẩm</label>

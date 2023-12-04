@@ -1,10 +1,10 @@
-@extends('admin_layout')
-@section('admin_content')
+@extends('layout')
+@section('content')
 <div class="table-agile-info">
   
   <div class="panel panel-default">
     <div class="panel-heading">
-     Thông tin đăng nhập
+    Xem đơn hàng đã đặt
     </div>
     
     <div class="table-responsive">
@@ -48,7 +48,8 @@
     <div class="panel-heading">
      Thông tin vận chuyển hàng
     </div>
-
+    
+    
     <div class="table-responsive">
                       <?php
                             $message = Session::get('message');
@@ -125,7 +126,6 @@
             <th>Phí ship hàng</th>
             <th>Số lượng</th>
             <th>Giá sản phẩm</th>
-            <th>Giá gốc</th>
             <th>Tổng tiền</th>
             
             <th style="width:30px;"></th>
@@ -157,7 +157,7 @@
             <td>{{number_format($details->product_feeship ,0,',','.')}}đ</td>
             <td>
 
-              <input type="number" min="1" {{$order_status==2 ? 'disabled' : ''}} class="order_qty_{{$details->product_id}}" value="{{$details->product_sales_quantity}}" name="product_sales_quantity">
+              <input type="number" readonly min="1"  {{$order_status==2 ? 'disabled' : ''}} class="order_qty_{{$details->product_id}}" value="{{$details->product_sales_quantity}}" name="product_sales_quantity">
 
               <input type="hidden" name="order_qty_storage" class="order_qty_storage_{{$details->product_id}}" value="{{$details->product->product_quantity}}">
 
@@ -165,15 +165,9 @@
 
               <input type="hidden" name="order_product_id" class="order_product_id" value="{{$details->product_id}}">
 
-             @if($order_status!=2) 
-
-              <button class="btn btn-default update_quantity_order" data-product_id="{{$details->product_id}}" name="update_quantity_order">Cập nhật</button>
-
-            @endif
 
             </td>
             <td>{{number_format($details->product_price ,0,',','.')}}đ</td>
-            <td>{{number_format($details->product->price_cost ,0,',','.')}}đ</td>
             <td>{{number_format($subtotal ,0,',','.')}}đ</td>
           </tr>
         @endforeach
@@ -198,36 +192,6 @@
 
               Phí ship : {{number_format($details->product_feeship,0,',','.')}}đ</br> 
              Thanh toán: {{number_format($total_coupon,0,',','.')}}đ 
-            </td>
-          </tr>
-          <tr>
-            <td colspan="6">
-              @foreach($getorder as $key => $or)
-                @if($or->order_status==1)
-                <form>
-                   @csrf
-                  <select style="width: 32%;" class="form-control order_details">
-                    <option value="">----Chọn hình thức đơn hàng-----</option>
-                    <option id="{{$or->order_id}}" selected value="1">Chưa xử lý</option>
-                    <option id="{{$or->order_id}}" value="2">Đã xử lý-Đã giao hàng</option>
-                    <!-- <option id="{{$or->order_id}}" value="3">Hủy đơn hàng-tạm giữ</option> -->
-                  </select>
-                </form>
-                @else
-                <form>
-                  @csrf
-                  <select style="width: 32%;" class="form-control order_details">
-                    <option value="">----Chọn hình thức đơn hàng-----</option>
-                    <option disable id="{{$or->order_id}}" value="1">Chưa xử lý</option>
-                    <option id="{{$or->order_id}}" selected value="2">Đã xử lý-Đã giao hàng</option>
-                    <!-- <option id="{{$or->order_id}}" value="3">Hủy đơn hàng-tạm giữ</option> -->
-                  </select>
-                </form>
-
-                @endif
-                @endforeach
-
-
             </td>
           </tr>
         </tbody>

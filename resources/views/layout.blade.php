@@ -103,8 +103,17 @@
                                 <li class="cart-hover"><a href="{{url('gio-hang')}}"><i class="fa fa-shopping-cart"></i> 
                                     Giỏ hàng
                                 <span class="show-cart"></span>
+                                </a></li>      
                                 
-                                </a></li>              
+                                <?php
+                                   $customer_id = Session::get('customer_id');
+                                   if($customer_id!=NULL){ 
+                                ?>
+                                <li><a href="{{URL::to('/history')}}"><i class="fa fa-history" aria-hidden="true"></i> Lịch sử đơn hàng</a></li>
+                                <?php
+                                }
+                                ?>
+                                
                                 <?php
                                    $customer_id = Session::get('customer_id');
                                    if($customer_id!=NULL){ 
@@ -114,11 +123,11 @@
                                 </li>
                                 
                                 <?php
-                            }else{
+                                }else{
                                  ?>
                                  <li><a href="{{URL::to('/dang-nhap')}}"><i class="fa fa-lock"></i> Đăng nhập</a></li>
                                  <?php 
-                             }
+                                }
                                  ?>
                                
                             </ul>

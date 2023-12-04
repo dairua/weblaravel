@@ -18,8 +18,7 @@ Route::post('/tim-kiem','HomeController@search');
 Route::post('/autocomplete-ajax','HomeController@autocomplete_ajax');
 
 //LienHe
-Route::get('/lien-he','ContactController@lien_he' );
-Route::get('/information','ContactController@information' );
+
 Route::post('/save-infor','ContactController@save_infor' );
 Route::post('/update-infor/{info_id}','ContactController@update_infor' );
 
@@ -45,9 +44,10 @@ Route::post('/dashboard-filter','AdminController@dashboard_filter');
 
 //Category Product
 Route::get('/add-category-product','CategoryProduct@add_category_product');
+Route::get('/all-category-product','CategoryProduct@all_category_product');
 Route::get('/edit-category-product/{category_product_id}','CategoryProduct@edit_category_product');
 Route::get('/delete-category-product/{category_product_id}','CategoryProduct@delete_category_product');
-Route::get('/all-category-product','CategoryProduct@all_category_product');
+
 
 Route::post('/export-csv','CategoryProduct@export_csv');
 Route::post('/import-csv','CategoryProduct@import_csv');
@@ -92,9 +92,10 @@ Route::post('/update-brand-product/{brand_product_id}','BrandProduct@update_bran
 
 //Category post
 Route::get('/add-category-post','CategoryPost@add_category_post');
+Route::get('/all-category-post','CategoryPost@all_category_post');
 Route::get('/edit-category-post/{category_post_id}','CategoryPost@edit_category_post');
 Route::post('/save-category-post','CategoryPost@save_category_post');
-Route::get('/all-category-post','CategoryPost@all_category_post');
+
 Route::post('/update-category-post/{cate_id}','CategoryPost@update_category_post');
 Route::get('/danh-muc-bai-viet/{cate_post_slug}','CategoryPost@danh_muc_bai_viet');
 Route::get('/delete-category-post/{cate_id}','CategoryPost@delete_category_post');
@@ -103,8 +104,7 @@ Route::get('/unactive-category-post/{cate_post_id}','CategoryPost@unactive_categ
 Route::get('/active-category-post/{cate_post_id}','CategoryPost@active_category_post');
 
 //Post
-Route::get('/add-post','PostController@add_post');
-Route::get('/all-post','PostController@all_post');
+
 Route::get('/delete-post/{post_id}','PostController@delete_post');
 Route::get('/edit-post/{post_id}','PostController@edit_post');
 Route::post('/save-post','PostController@save_post');
@@ -112,10 +112,25 @@ Route::post('/update-post/{post_id}','PostController@update_post');
 
 
 Route::group(['middleware' => 'auth.roles'], function () {
+    Route::get('/lien-he','ContactController@lien_he' );
+    Route::get('/information','ContactController@information' );
+
+    Route::get('/add-post','PostController@add_post');
+    Route::get('/all-post','PostController@all_post');
+
+    Route::get('/add-category-post','CategoryPost@add_category_post');
+    Route::get('/all-category-post','CategoryPost@all_category_post');
+
+    Route::get('/add-category-product','CategoryProduct@add_category_product');
+    Route::get('/all-category-product','CategoryProduct@all_category_product');
+
 	Route::get('/add-product','ProductController@add_product');
     Route::get('/edit-product/{product_id}','ProductController@edit_product');
     Route::get('/delete-product/{product_id}','ProductController@delete_product');
     Route::get('/all-product','ProductController@all_product');
+
+    Route::get('users','UserController@index');
+    Route::get('add-users','UserController@add_users');
 });
 // Route::get('users',
 // 		[
@@ -124,11 +139,11 @@ Route::group(['middleware' => 'auth.roles'], function () {
 // 			'middleware'=> 'auth.roles',
 // 			// 'auth.roles' => ['admin','author'],
 // 		]);
-Route::get('users','UserController@index')->middleware('auth.roles');
+
 Route::get('impersonate/{admin_id}','UserController@impersonate');
 Route::get('impersonate-destroy','UserController@impersonate_destroy');
 Route::get('delete-user-roles/{admin_id}','UserController@delete_user_roles')->middleware('auth.roles');
-Route::get('add-users','UserController@add_users')->middleware('auth.roles');
+
 Route::post('store-users','UserController@store_users');
 Route::post('assign-roles','UserController@assign_roles')->middleware('auth.roles');
 
@@ -182,6 +197,8 @@ Route::get('/view-order/{order_code}','OrderController@view_order');
 Route::post('/update-order-qty','OrderController@update_order_qty');
 Route::post('/update-qty','OrderController@update_qty');
 
+Route::get('/history','OrderController@history');
+Route::get('/view-history/{order_code}','OrderController@view_history');
 
 //Delivery
 Route::get('/delivery','DeliveryController@delivery');

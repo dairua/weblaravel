@@ -1,14 +1,9 @@
-@extends('admin_layout')
-@section('admin_content')
-    <div class="table-agile-info">
+@extends('layout')
+@section('content')
+<div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Liệt kê đơn hàng
-    </div>
-    <div class="row w3-res-tb">
-     
-     
-    
+      Lịch sử đơn hàng
     </div>
     <div class="table-responsive">
                       <?php
@@ -51,12 +46,12 @@
            
            
             <td>
-              <a href="{{URL::to('/view-order/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class="">
+              <a href="{{URL::to('/view-history/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-eye text-success text-active"></i></a>
-              <a onclick="return confirm('Bạn có chắc là muốn xóa đơn đặt hàng này không?')" href="{{URL::to('/delete-order/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class=""></a>
+              <!-- <a onclick="return confirm('Bạn có chắc là muốn xóa đơn đặt hàng này không?')" href="{{URL::to('/delete-order/'.$ord->order_code)}}" class="active styling-edit" ui-toggle-class=""></a>
               <div style='cursor:pointer' data-id="{{$ord->order_code}}" class="active styling-edit" ui-toggle-class="" id="delete"> 
                 <i class="fa fa-times text-danger text"></i>
-              </div>
+              </div> -->
 
             </td>
           </tr>

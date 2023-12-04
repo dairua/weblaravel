@@ -58,7 +58,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 		</form>
 		<!-- <a href="{{url('/login-facebook')}}">Login Facebook</a> | -->
-		<a href="{{url('/login-google')}}">Login Google</a> |
+		                <style type="text/css">
+							ul.list-login{
+								margin: 10px;
+								padding:0;
+							}
+							ul.list-login li {
+								display: inline;
+								margin: 5px;
+							}
+						</style>
+
+                        <ul class="list-login">
+                        <li><a href="{{url('login-google')}}">
+							<img width="10%" src="{{asset('public/frontend/images/google.png')}}" alt="Đăng nhập bằng tài khoản google">
+						</a></li>
+                        </ul> 
 		<a href="{{url('/register-auth')}}">Đăng kí Auth</a> |
         <a href="{{url('/login-auth')}}">Đăng nhập Auth</a>
 		<!-- {{-- <p>Don't Have an Account ?<a href="registration.html">Create an account</a></p> --}} -->

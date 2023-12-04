@@ -265,7 +265,6 @@
 											<input type="hidden" name="total_vnpay" value="{{$total_after}}">
 								        <button type="submit" name="redirect" class="btn btn-default check_out" >Thanh toán VNPAY</button>
 							            </form>
-
 						            </td>
 								</tr>
 								@endif
