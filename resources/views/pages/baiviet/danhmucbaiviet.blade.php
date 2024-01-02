@@ -9,8 +9,10 @@
                             @foreach($post as $key => $p)
                                 <div class="single-products" style="margin: 10px 0;padding: 2px">
                                         <div class="text-center">  
-                                            <img style="float:left;width:30%;padding:5px;height:160px" src="{{URL::to('public/uploads/post/'.$p->post_image)}}" alt="{{$p->post_title}}" />
+                                            <img style="float:left;width:30%;padding:5px;height:235px" alt="{{$p->post_title}}" src="http://localhost/Laravel/Mylaravel/public/uploads/contact/Handmade48.png" />
                                             <h4 style="color:#0000; padding:5px; ">{{$p->post_title}}</h4>
+                                            <!-- <p>{!!$p->post_title!!}</p> -->
+                                            <h2 style="font-size:12px" class="title text-center">{{$p->post_title}}</h2>
                                             <p>{!!$p->post_desc!!}</p>  
                                         </div>   
                                         <div class ="text-right">

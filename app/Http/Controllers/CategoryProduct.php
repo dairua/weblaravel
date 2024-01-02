@@ -145,9 +145,9 @@ class CategoryProduct extends Controller
             $min_price=$_GET['start_price'];
             $max_price=$_GET['end_price'];
 
-            $category_by_id=Product::with('category')->whereBetween('product_price',[$min_price,$max_price])->orderBy('product_price','ASC')->paginate(6);
+            $category_by_id=Product::with('category')->whereBetween('product_price',[$min_price,$max_price])->orderBy('product_price','ASC')->paginate(100);
         }else{
-            $category_by_id = Product::with('category')->where('category_id',$category_id)->orderBy('product_id','DESC')->paginate(6)->appends(request()->query());
+            $category_by_id = Product::with('category')->where('category_id',$category_id)->orderBy('product_id','DESC')->paginate(100)->appends(request()->query());
         }
 
         $category_name = DB::table('tbl_category_product')->where('tbl_category_product.slug_category_product',$slug_category_product)->limit(1)->get();

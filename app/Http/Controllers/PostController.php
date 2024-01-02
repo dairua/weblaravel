@@ -40,41 +40,11 @@ class PostController extends Controller
     public function all_post(){
         $this->AuthLogin();
     	$all_post = Post::with('cate_post')->orderBy('post_id')->get();
-    	
     	return view('admin.post.list_post')->with(compact('all_post',$all_post));
 
     }
     public function save_post(Request $request){
         $this->AuthLogin();
-    	
-        // $this->AuthLogin();
-    	// $data = $request->all();
-        // $post = new Post();
-        // $post->post_title = $data['post_title'];
-        // $post->post_slug = $data['post_slug'];
-        // $post->post_content = $data['post_content'];
-        // $post->post_meta_keywords = $data['post_meta_keywords'];
-        // $post->post_meta_desc = $data['post_meta_desc'];
-        // $post->post_desc = $data['post_desc'];
-        // $post->cate_post_id = $data['cate_post_id'];
-        // $post->post_status = $data['post_status'];
-        // $post->post_image = $data['post_image'];
-    	
-        // $get_image = $request->file('post_image');
-      
-        // if($get_image){
-        //     $get_name_image = $get_image->getClientOriginalName();
-        //     $name_image = current(explode('.',$get_name_image));
-        //     $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-        //     $get_image->move('public/uploads/post',$new_image);
-        //     $post->post_image = $new_image;
-        //     $post->save();
-        //     Toastr::success('Thêm bài viết thành công','Thành công');
-        //     return redirect()->back();
-        // }
-        //     // $post->save();
-        //     Toastr::warning('Thêm Ảnh','Cảnh Báo');
-        //     return redirect()->back();
 
         $data=$request->all();
         $post=new Post();
@@ -89,12 +59,12 @@ class PostController extends Controller
         $post->post_image = $data['post_image'];
     	
         $get_image = $request->file('post_image');
-        $path='/public/uploads/post';
+        // $path='public/uploads/post';
         if($get_image){
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.',$get_name_image));
             $new_image =  $name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
-            $get_image->move($path,$new_image);
+            $get_image->move('public/uploads/post',$new_image);
             $post->post_image = $new_image;
         }
         $post->save();
@@ -143,7 +113,7 @@ class PostController extends Controller
         $post = Post::find($post_id);
         $post_image=$post->post_image;
         if($post_image){
-            $path='public/uplads/post/'.$post_image;
+            $path='public/uplads/post'.$post_image;
         }
         $post->delete();
 

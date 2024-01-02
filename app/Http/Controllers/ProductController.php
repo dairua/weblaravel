@@ -35,7 +35,7 @@ class ProductController extends Controller
         $brand_product = DB::table('tbl_brand')->orderby('brand_id','desc')->get(); 
        
 
-        return view('admin.add_product')->with('category_post',$category_post)->with('cate_product', $cate_product)->with('brand_product',$brand_product)->with('category_post', $category_post);
+        return view('admin.add_product')->with('category_post',$category_post)->with('cate_product', $cate_product)->with('brand_product',$brand_product);
     	
 
     }
@@ -76,30 +76,13 @@ class ProductController extends Controller
             $data['product_image'] = $new_image;
             DB::table('tbl_product')->insert($data);
             Toastr::success('Thêm sản phẩm thành công','Thành công');
-            return Redirect::to('add-product');
+            return Redirect::to('all-product');
         }
         $data['product_image'] = '';
     	DB::table('tbl_product')->insert($data);
     	Toastr::error('Thêm sản phẩm thất bại','Thất bại');
-    	return Redirect::to('all-product');
-        
-        // $sp = new Product;
-        // $sp->product_name = $request->product_name;
-        // $sp->product_quantity = $request->product_quantity;
-        // $sp->product_slug = $request->product_slug;
-        // $sp->product_price = $request->product_price;
-        // $sp->product_desc = $request->product_desc;
-        // $sp->product_content = $request->product_content;
-        // $sp->category_id = $request->product_cate;
-        // $sp->brand_id = $request->product_brand;
-        // $sp->product_status = $request->product_status;
-        // $sp->product_sold = 1;
-        // $sp->product_image = 'acxcxc';
-
-        // $get_image = $request->file('product_image');
-        
-        // $sp->save();
-        // return Redirect::to('all-product');
+    	return Redirect::to('add-product');
+    
     }
     public function unactive_product($product_id){
          $this->AuthLogin();
